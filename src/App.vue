@@ -20,17 +20,29 @@
 
       <!--        <div class="metamask-link"><a href="https://metamask.io/download.html" target="_blank">Click Here</a></div>-->
       <div class="balance">
-        <div id="balance_num" style="display: inline-block;">Connect to Metamask,<br>Then press reload.</div>
+        <div id="balance_num" style="display: inline-block;">Connect to Metamask...<br>Then, press reload.</div>
       </div>
       <div class="txtform"><input type="text" id="tbox" name="tbox" placeholder="Enter amount"></div>
       <div class="arrows"><img src="./assets/img/arrows.png" width="40px"></div>
+      <div class="blankScreen"><img src="./assets/img/interface_final_closed.png" width="440px"></div>
+
       <div class="ethButton"><img src="./assets/img/ethButton.png" width="71px"></div>
       <div class="krkButton"><img src="./assets/img/krkButton.png" width="71px"></div>
       <div class="ethWalletButton"><img src="./assets/img/ethWalletButton.png" width="71px"></div>
       <div class="krkWalletButton"><img src="./assets/img/krkWalletButton.png" width="71px"></div>
       <div class="rewardButton"><img src="./assets/img/rewardButton.png" width="71px"></div>
-      <div class="blankScreen"><img src="./assets/img/interface_final_closed.png" width="440px"></div>
 
+      <div class="ethButtonBlue"><img src="./assets/img/ethButtonBlue.png" width="71px"></div>
+      <div class="krkButtonBlue"><img src="./assets/img/krkButtonBlue.png" width="71px"></div>
+      <div class="ethWalletButtonBlue"><img src="./assets/img/ethWalletButtonBlue.png" width="71px"></div>
+      <div class="krkWalletButtonBlue"><img src="./assets/img/krkWalletButtonBlue.png" width="71px"></div>
+      <div class="rewardButtonBlue"><img src="./assets/img/rewardButtonBlue.png" width="71px"></div>
+
+      <div class="ethField" v-on:mouseenter="ethButtonBlueShow" v-on:mouseleave="ethButtonBlueHide" v-on:click="ethButtonBlueClick"> </div>
+      <div class="krkField" v-on:mouseenter="krkButtonBlueShow" v-on:mouseleave="krkButtonBlueHide" v-on:click="krkButtonBlueClick"> </div>
+      <div class="ethWalletField"> </div>
+      <div class="krkWalletField"> </div>
+      <div class="rewardField"> </div>
 
 
     </div>
@@ -42,6 +54,11 @@
 <script>
 import web3 from '../contracts/web3';
 import auctionBox from '../contracts/auctionBoxInstance';
+
+
+
+
+
 
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -67,6 +84,11 @@ export default {
   },
   data: function () {
     return {
+      ethButtonClicked:false,
+      krkButtonClicked:false,
+      ethWalletButtonClicked:false,
+      krkWalletButtonClicked:false,
+      rewardButtonClicked:false,
       userAddress: 'Connect to Metamask, then reload.',
       miners: '-1',
       totalBurned: '-1',
@@ -81,6 +103,45 @@ export default {
     this.refreshData();
   },
   methods: {
+    ethButtonBlueShow(){
+      if(!this.ethButtonClicked) document.getElementsByClassName('ethButtonBlue')[0].style.display = "block";
+      },
+    ethButtonBlueHide(){
+      document.getElementsByClassName('ethButtonBlue')[0].style.display = "none";
+      },
+    ethButtonBlueClick(){
+      this.resetButtons();
+      this.ethButtonClicked = true;
+      this.grayOutButtonsExcept('ethButton');
+      document.getElementsByClassName('ethButtonBlue')[0].style.display = "none";
+    },
+    krkButtonBlueShow(){
+      if(!this.krkButtonClicked) document.getElementsByClassName('krkButtonBlue')[0].style.display = "block";
+    },
+    krkButtonBlueHide(){
+      document.getElementsByClassName('krkButtonBlue')[0].style.display = "none";
+    },
+    krkButtonBlueClick(){
+      this.resetButtons();
+      this.krkButtonClicked = true;
+      this.grayOutButtonsExcept('krkButton');
+      document.getElementsByClassName('krkButtonBlue')[0].style.display = "none";
+    },
+    resetButtons(){
+      this.ethButtonClicked = false;
+      this.krkButtonClicked = false;
+      this.ethWalletButtonClicked = false;
+      this.krkWalletButtonClicked = false;
+      this.rewardButtonClicked = false;
+    },
+    grayOutButtonsExcept(bttnExcpt){
+      document.getElementsByClassName('ethButton')[0].style.display = "block";
+      document.getElementsByClassName('krkButton')[0].style.display = "block";
+      document.getElementsByClassName('ethWalletButton')[0].style.display = "block";
+      document.getElementsByClassName('krkWalletButton')[0].style.display = "block";
+      document.getElementsByClassName('rewardButton')[0].style.display = "block";
+      document.getElementsByClassName(bttnExcpt)[0].style.display = "none";
+    },
     reloadSale(){window.location.reload(true);},
     refreshData() {
       this.userAddress = formatAddress(web3.eth.accounts.givenProvider.selectedAddress);
@@ -142,55 +203,30 @@ body {background:none transparent !important;
   width: 160px !important;
 }
 
-.depositButton {
-  margin-top: 3px;
-  margin-right: 26px !important;
-  margin-left: -13px;
-  border-radius: 100px !important;
-  height: 70px;
-  width: 69px;
-  background: none !important;
-  border: 0px !important;
-  cursor: pointer;
-}
 
-.withdrawButton {
-  border: 0px !important;
-  margin-top: 3px;
-  margin-left: -13px;
-  border-radius: 100px !important;
-  height: 69px;
-  width: 69px;
-  background: none !important;
-  cursor: pointer;
-}
-
-
-.refreshButton {
-  border: 0px  !important;
-  border-radius: 100px !important;
-  height: 38px;
-  width: 33px;
-  background: none !important;
-  position: absolute;
-  margin-top: -313px;
-  margin-left: 339px;
-  cursor: pointer;
-  z-index: 1;
-}
-
-
+/*---------------------------------------------------*/
 .arrows{
   position: absolute;
   margin-top: 142px;
   margin-right: -1px;
   z-index: 2;
 }
+.blankScreen{
+  position: absolute;
+}
+
+/*---------------------------------------------------*/
+
+.refreshButton {
+  position: absolute;
+  margin-top: -313px;
+  margin-left: 339px;
+}
 
 .ethButton{
   position: absolute;
   margin-top: 141px;
-  margin-right: 73px;
+  margin-right: 74px;
 }
 
 .krkButton{
@@ -216,8 +252,105 @@ body {background:none transparent !important;
   margin-top: 266px;
   margin-left: 1px;
 }
-.blankScreen{
+/*---------------------------------------------------*/
+.ethButtonBlue{
   position: absolute;
+  margin-top: 141px;
+  margin-right: 74px;
+  display: none;
 }
 
+.krkButtonBlue{
+  position: absolute;
+  margin-top: 142px;
+  margin-left: 75px;
+  display: none;
+}
+
+.ethWalletButtonBlue{
+  position: absolute;
+  margin-top: 205px;
+  margin-right: 184px;
+  display: none;
+}
+
+.krkWalletButtonBlue{
+  position: absolute;
+  margin-top: 209px;
+  margin-left: 185px;
+  display: none;
+}
+
+.rewardButtonBlue{
+  position: absolute;
+  margin-top: 266px;
+  margin-left: 1px;
+  display: none;
+}
+/*---------------------------------------------------*/
+
+.ethField{
+  position: absolute;
+  width: 59px;
+  height: 59px;
+  z-index: 10;
+  margin-top: 142px;
+  margin-right: 73px;
+  border-radius: 100px;
+  cursor: pointer;
+}
+
+.krkField{
+  position: absolute;
+  width: 59px;
+  height: 59px;
+  z-index: 10;
+  margin-top: 142px;
+  margin-left: 75px;
+  border-radius: 100px;
+  cursor: pointer;
+}
+
+.ethWalletField{
+  border: 1px solid #fff;
+  position: absolute;
+  width: 59px;
+  height: 59px;
+  z-index: 10;
+  border-radius: 100px;
+  margin-top: 205px;
+  margin-right: 184px;
+  cursor: pointer;
+}
+
+.krkWalletField{
+  border: 1px solid #fff;
+  position: absolute;
+  width: 59px;
+  height: 59px;
+  z-index: 10;
+  border-radius: 100px;
+  margin-top: 209px;
+  margin-left: 185px;
+  cursor: pointer;
+}
+
+.rewardField{
+  border: 1px solid #fff;
+  position: absolute;
+  width: 59px;
+  height: 59px;
+  z-index: 10;
+  border-radius: 100px;
+  margin-top: 266px;
+  margin-left: 1px;
+  cursor: pointer;
+}
+/*---------------------------------------------------*/
+
+
+
+
+
+/*---------------------------------------------------*/
 </style>
