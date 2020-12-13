@@ -12,67 +12,49 @@
     <div class="nopopup" id="nopopup">
         <div class="nopopup-inner">
             <div class="miner-off">
-                <img src="./assets/img/miner.png" alt="" width="100%" class="miner">
+                <img src="./assets/img/interface_final_closed.png" alt="" width="100%" class="miner">
             </div>
         </div>
         <div class="install-metamask">Please install:<br><img src="./assets/img/metamask_logo.png" height="50px"><br>
-            Metamask.<br> Then, reload...
+            Metamask Plugin.<br> Then, reload...
+            <div class="metamask-link"><a href="https://metamask.io/download.html" target="_blank"><br>Click here to visit Metamask.</a></div>
+
         </div>
-        <div class="metamask-link"><a href="https://metamask.io/download.html" target="_blank">Click Here</a></div>
+        <div class="reload"><img src="./assets/img/reload.png" width="32px" onclick="reloadSale()"> </div>
+
     </div>
 </div>
 
 <script>
-    function displdep() {
-        document.getElementsByClassName('balance')[0].style.display = "none";
-        document.getElementsByClassName('install-metamask')[0].style.display = "none";
-        document.getElementsByClassName('balance')[0].style.display = "none";
-        document.getElementsByClassName('withscr')[0].style.display = "none";
-        document.getElementsByClassName('reloadscr')[0].style.display = "none";
 
-        document.getElementsByClassName('depscr')[0].style.display = "block";
+    function reloadSale(){window.location.reload(true);}
+
+
+    function displdep() {
+        document.getElementsByClassName('install-metamask')[0].style.display = "none";
     }
 
 
     function displreload(){
-        document.getElementsByClassName('balance')[0].style.display = "none";
         document.getElementsByClassName('install-metamask')[0].style.display = "none";
-        document.getElementsByClassName('balance')[0].style.display = "none";
-        document.getElementsByClassName('depscr')[0].style.display = "none";
-        document.getElementsByClassName('withscr')[0].style.display = "none";
-
-        document.getElementsByClassName('reloadscr')[0].style.display = "block";
     }
 
     function displwtn() {
-        document.getElementsByClassName('balance')[0].style.display = "none";
         document.getElementsByClassName('install-metamask')[0].style.display = "none";
-        document.getElementsByClassName('balance')[0].style.display = "none";
-        document.getElementsByClassName('depscr')[0].style.display = "none";
-        document.getElementsByClassName('reloadscr')[0].style.display = "none";
-
-        document.getElementsByClassName('withscr')[0].style.display = "block";
     }
 
     function mouseExit() {
-        document.getElementsByClassName('depscr')[0].style.display = "none";
-        document.getElementsByClassName('withscr')[0].style.display = "none";
-        document.getElementsByClassName('reloadscr')[0].style.display = "none";
-
-        document.getElementsByClassName('balance')[0].style.display = "block";
     }
 
     window.addEventListener('load', function () {
-
-
         if (typeof web3 == 'undefined') {
             window.location.href = "#nopopup";
             document.getElementsByClassName('nometamask')[0].style.display = "block";
             document.getElementsByClassName('hasmetamask')[0].style.display = "none";
         } else {
-            document.getElementsByClassName("nometamask")[0].style.display = "block";
+            document.getElementsByClassName("nometamask")[0].style.display = "none";
+            document.getElementsByClassName('hasmetamask')[0].style.display = "block";
             window.location.href = "#popup";
-
         }
     });
 
@@ -105,14 +87,15 @@
     .metamask-link {
         margin-right: 0;
         position: absolute;
-        margin-top: 80px;
+        margin-top: 0px;
     }
 
     .install-metamask {
         margin-right: 0;
         position: absolute;
-        margin-bottom: 170px;
+        margin-bottom: 225px;
         text-align: center;
+        width: 200px;
     }
 
     .depscr {
@@ -142,6 +125,7 @@
         position: absolute;
         margin-bottom: 170px;
         text-align: center;
+        z-index: 5;
     }
 
 
@@ -180,7 +164,7 @@
 
     #tbox {
         width: 260px;
-        margin-top: 80px;
+        margin-bottom: 30px;
         text-align: center;
         border: 0px;
         background: none;
@@ -257,7 +241,6 @@
         max-height: 600px;
         width: 440px;
         height: auto;
-        transform: rotate(32deg);
         transition: .64s ease-in-out;
     }
 
@@ -272,6 +255,23 @@
         right: 0;
         transform: rotate(0);
     }
+
+    .reload {
+        border: 0px solid !important;
+        border-radius: 100px !important;
+        height: 46px;
+        width: 46px;
+        background: none !important;
+        position: absolute;
+        margin-left: 355px;
+        margin-bottom: 305px;
+        cursor: pointer;
+        z-index: 2;
+    }
+
+
+
+
 
 
 </style>

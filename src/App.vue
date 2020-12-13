@@ -6,70 +6,32 @@
       <div class="popup-inner">
 
 
-        <div class="miner">
-          <img src="./assets/img/miner.png" alt="" width="100%" class="miner">
+        <div class="sale">
+          <img src="./assets/img/interface_final_open.png" alt="" width="100%" class="sale">
         </div>
       </div>
 
       <!--        <div class="install-metamask">Please install:<br><img src="./assets/img/metamask_logo.png" height="50px"><br>-->
       <!--          Metamask.<br> Then, reload...</div>-->
 
-      <div class="refreshButton" v-on:click="reloadMiner()"
-           onmouseenter="displreload()" onmouseleave="mouseExit()"
-      ></div>
+      <div class="refreshButton" v-on:click="reloadSale()"><img src="./assets/img/reload.png" width="32px"> </div>
 
-
-
-      <div class="depscr" style="display: none">DEPOSIT<br><img src="./assets/img/deposit.png" height="50px">
-        <div style="text-align: left">
-          <li>Enter amount</li>
-          <li>Click green button</li>
-        </div>
-      </div>
-
-      <div class="withscr" style="display: none">WITHDRAW<br><img src="./assets/img/withdraw.png" height="50px">
-        <div style="text-align: left">
-          <li>Enter amount</li>
-          <li>Click red button</li>
-        </div>
-      </div>
-
-      <div class="reloadscr" style="display: none">RELOAD<br><img src="./assets/img/reload.png" height="50px">
-        <div style="text-align: left">
-          <li>Connect to Metamask</li>
-          <li>Press Reload</li>
-        </div>
-      </div>
 
 
       <!--        <div class="metamask-link"><a href="https://metamask.io/download.html" target="_blank">Click Here</a></div>-->
       <div class="balance">
-        Miner Balance: <br>
-        <div id="balance_num" style="display: inline-block;">Connect to Metamask</div>
-        <br><br>
-        Block Number: <br>
-        <div id="block_num" style="display: inline-block;">Connect to Metamask</div>
+        <div id="balance_num" style="display: inline-block;">Connect to Metamask,<br>Then press reload.</div>
       </div>
       <div class="txtform"><input type="text" id="tbox" name="tbox" placeholder="Enter amount"></div>
-      <div class="depbttn" id="depbttn" onmouseenter="displdep()" onmouseleave="mouseExit()">
-        <div class="container">
-          <b-button
-              @click="processDeposit"
-              class="depositButton"
-          >
+      <div class="arrows"><img src="./assets/img/arrows.png" width="40px"></div>
+      <div class="ethButton"><img src="./assets/img/ethButton.png" width="71px"></div>
+      <div class="krkButton"><img src="./assets/img/krkButton.png" width="71px"></div>
+      <div class="ethWalletButton"><img src="./assets/img/ethWalletButton.png" width="71px"></div>
+      <div class="krkWalletButton"><img src="./assets/img/krkWalletButton.png" width="71px"></div>
+      <div class="rewardButton"><img src="./assets/img/rewardButton.png" width="71px"></div>
+      <div class="blankScreen"><img src="./assets/img/interface_final_closed.png" width="440px"></div>
 
-          </b-button>
-        </div>
-      </div>
-      <div class="wthbttn" id="wthbttn" onmouseenter="displwtn()" onmouseleave="mouseExit()">
-        <div class="container">
-          <b-button
-              @click="processWithdraw"
-              class="withdrawButton"
-          >
-          </b-button>
-        </div>
-      </div>
+
 
     </div>
   </div>
@@ -119,7 +81,7 @@ export default {
     this.refreshData();
   },
   methods: {
-    reloadMiner(){window.location.reload(true);},
+    reloadSale(){window.location.reload(true);},
     refreshData() {
       this.userAddress = formatAddress(web3.eth.accounts.givenProvider.selectedAddress);
       const fromAddress = web3.eth.accounts.givenProvider.selectedAddress;
@@ -173,6 +135,8 @@ export default {
 </script>
 
 <style>
+body {background:none transparent !important;
+}
 
 #tbox{
   width: 160px !important;
@@ -203,17 +167,57 @@ export default {
 
 
 .refreshButton {
-  border: 0px !important;
+  border: 0px  !important;
   border-radius: 100px !important;
-  height: 46px;
-  width: 46px;
+  height: 38px;
+  width: 33px;
   background: none !important;
   position: absolute;
-  margin-top: -466px;
-  margin-left: 393px;
+  margin-top: -313px;
+  margin-left: 339px;
   cursor: pointer;
+  z-index: 1;
 }
 
 
+.arrows{
+  position: absolute;
+  margin-top: 142px;
+  margin-right: -1px;
+  z-index: 2;
+}
+
+.ethButton{
+  position: absolute;
+  margin-top: 141px;
+  margin-right: 73px;
+}
+
+.krkButton{
+  position: absolute;
+  margin-top: 142px;
+  margin-left: 75px;
+}
+
+.ethWalletButton{
+  position: absolute;
+  margin-top: 205px;
+  margin-right: 184px;
+}
+
+.krkWalletButton{
+  position: absolute;
+  margin-top: 209px;
+  margin-left: 185px;
+}
+
+.rewardButton{
+  position: absolute;
+  margin-top: 266px;
+  margin-left: 1px;
+}
+.blankScreen{
+  position: absolute;
+}
 
 </style>
