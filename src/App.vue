@@ -11,20 +11,21 @@
         </div>
       </div>
 
-      <!--        <div class="install-metamask">Please install:<br><img src="./assets/img/metamask_logo.png" height="50px"><br>-->
-      <!--          Metamask.<br> Then, reload...</div>-->
-
-      <div class="refreshButton" v-on:click="reloadSale()"><img src="./assets/img/reload.png" width="32px"> </div>
+      <div class="refreshButton" v-if="!this.userAddress.startsWith('0x')" v-on:click="reloadSale()"><img src="./assets/img/reload.png" width="32px"> </div>
 
 
 
       <!--        <div class="metamask-link"><a href="https://metamask.io/download.html" target="_blank">Click Here</a></div>-->
-      <div class="balance">
+      <div class="balance" v-if="!this.userAddress.startsWith('0x')">
         <div id="balance_num" style="display: inline-block;">Connect to Metamask...<br>Then, press reload.</div>
       </div>
-      <div class="txtform"><input type="text" id="tbox" name="tbox" placeholder="Enter amount"></div>
+
+      <div class="txtform" v-if="!this.userAddress.startsWith('0x')"><input type="text" id="tbox" name="tbox" placeholder="Enter amount"></div>
       <div class="arrows"><img src="./assets/img/arrows.png" width="40px"></div>
-      <div class="blankScreen"><img src="./assets/img/interface_final_closed.png" width="440px"></div>
+
+      <div class="blankScreen" v-if="!this.userAddress.startsWith('0x')">
+        <img src="./assets/img/interface_final_closed.png" width="440px">
+      </div>
 
       <div class="ethButton"><img src="./assets/img/ethButton.png" width="71px"></div>
       <div class="krkButton"><img src="./assets/img/krkButton.png" width="71px"></div>
@@ -40,9 +41,9 @@
 
       <div class="ethField" v-on:mouseenter="ethButtonBlueShow" v-on:mouseleave="ethButtonBlueHide" v-on:click="ethButtonBlueClick"> </div>
       <div class="krkField" v-on:mouseenter="krkButtonBlueShow" v-on:mouseleave="krkButtonBlueHide" v-on:click="krkButtonBlueClick"> </div>
-      <div class="ethWalletField"> </div>
-      <div class="krkWalletField"> </div>
-      <div class="rewardField"> </div>
+      <div class="ethWalletField" v-on:mouseenter="ethWalletButtonBlueShow" v-on:mouseleave="ethWalletButtonBlueHide" v-on:click="ethWalletButtonBlueClick"> </div>
+      <div class="krkWalletField" v-on:mouseenter="krkWalletButtonBlueShow" v-on:mouseleave="krkWalletButtonBlueHide" v-on:click="krkWalletButtonBlueClick"> </div>
+      <div class="rewardField" v-on:mouseenter="rewardButtonBlueShow" v-on:mouseleave="rewardButtonBlueHide" v-on:click="rewardButtonBlueClick"> </div>
 
 
     </div>
@@ -53,24 +54,24 @@
 
 <script>
 import web3 from '../contracts/web3';
-import auctionBox from '../contracts/auctionBoxInstance';
+// import auctionBox from '../contracts/auctionBoxInstance';
 
 
 
 
 
 
-function numberWithCommas(x) {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
-
-function truncateNumber(x) {
-  return Math.trunc(x * 1000) / 1000;
-}
-
-function formatNumber(x) {
-  return x.replace(/,/g, '');
-}
+// function numberWithCommas(x) {
+//   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+// }
+//
+// function truncateNumber(x) {
+//   return Math.trunc(x * 1000) / 1000;
+// }
+//
+// function formatNumber(x) {
+//   return x.replace(/,/g, '');
+// }
 
 function formatAddress(address) {
   return address.substr(0, 5) + "..." + address.substr(35);
@@ -89,43 +90,91 @@ export default {
       ethWalletButtonClicked:false,
       krkWalletButtonClicked:false,
       rewardButtonClicked:false,
-      userAddress: 'Connect to Metamask, then reload.',
-      miners: '-1',
-      totalBurned: '-1',
-      totalMinted: '-1',
-      blockNumber: '-1',
-      reward: 'Connect to Metamask',
-      deposit: '',
-      withdraw: '',
+
+      userAddress: 'Connect to Metamask, then reload.'
+
     };
   },
   beforeMount() {
-    this.refreshData();
+    this.userAddress = formatAddress(web3.eth.accounts.givenProvider.selectedAddress);
+    if(this.userAddress.startsWith('0x')) document.getElementsByClassName('blankScreen')[0].style.display = "none";
   },
   methods: {
+// ----------------BUTTONS START---------------
     ethButtonBlueShow(){
+      if(!this.userAddress.startsWith('0x')) return;
       if(!this.ethButtonClicked) document.getElementsByClassName('ethButtonBlue')[0].style.display = "block";
       },
     ethButtonBlueHide(){
+      if(!this.userAddress.startsWith('0x')) return;
       document.getElementsByClassName('ethButtonBlue')[0].style.display = "none";
       },
     ethButtonBlueClick(){
+      if(!this.userAddress.startsWith('0x')) return;
       this.resetButtons();
       this.ethButtonClicked = true;
       this.grayOutButtonsExcept('ethButton');
       document.getElementsByClassName('ethButtonBlue')[0].style.display = "none";
     },
     krkButtonBlueShow(){
+      if(!this.userAddress.startsWith('0x')) return;
       if(!this.krkButtonClicked) document.getElementsByClassName('krkButtonBlue')[0].style.display = "block";
     },
     krkButtonBlueHide(){
       document.getElementsByClassName('krkButtonBlue')[0].style.display = "none";
     },
     krkButtonBlueClick(){
+      if(!this.userAddress.startsWith('0x')) return;
       this.resetButtons();
       this.krkButtonClicked = true;
       this.grayOutButtonsExcept('krkButton');
       document.getElementsByClassName('krkButtonBlue')[0].style.display = "none";
+    },
+    ethWalletButtonBlueShow(){
+      if(!this.userAddress.startsWith('0x')) return;
+      if(!this.ethWalletButtonClicked) document.getElementsByClassName('ethWalletButtonBlue')[0].style.display = "block";
+    },
+    ethWalletButtonBlueHide(){
+      if(!this.userAddress.startsWith('0x')) return;
+      document.getElementsByClassName('ethWalletButtonBlue')[0].style.display = "none";
+    },
+    ethWalletButtonBlueClick(){
+      if(!this.userAddress.startsWith('0x')) return;
+      this.resetButtons();
+      this.ethWalletButtonClicked = true;
+      this.grayOutButtonsExcept('ethWalletButton');
+      document.getElementsByClassName('ethWalletButtonBlue')[0].style.display = "none";
+    },
+
+    krkWalletButtonBlueShow(){
+      if(!this.userAddress.startsWith('0x')) return;
+      if(!this.krkWalletButtonClicked) document.getElementsByClassName('krkWalletButtonBlue')[0].style.display = "block";
+    },
+    krkWalletButtonBlueHide(){
+      if(!this.userAddress.startsWith('0x')) return;
+      document.getElementsByClassName('krkWalletButtonBlue')[0].style.display = "none";
+    },
+    krkWalletButtonBlueClick(){
+      if(!this.userAddress.startsWith('0x')) return;
+      this.resetButtons();
+      this.krkWalletButtonClicked = true;
+      this.grayOutButtonsExcept('krkWalletButton');
+      document.getElementsByClassName('krkWalletButtonBlue')[0].style.display = "none";
+    },
+    rewardButtonBlueShow(){
+      if(!this.userAddress.startsWith('0x')) return;
+      if(!this.rewardButtonClicked) document.getElementsByClassName('rewardButtonBlue')[0].style.display = "block";
+    },
+    rewardButtonBlueHide(){
+      if(!this.userAddress.startsWith('0x')) return;
+      document.getElementsByClassName('rewardButtonBlue')[0].style.display = "none";
+    },
+    rewardButtonBlueClick(){
+      if(!this.userAddress.startsWith('0x')) return;
+      this.resetButtons();
+      this.rewardButtonClicked = true;
+      this.grayOutButtonsExcept('rewardButton');
+      document.getElementsByClassName('rewardButtonBlue')[0].style.display = "none";
     },
     resetButtons(){
       this.ethButtonClicked = false;
@@ -142,54 +191,24 @@ export default {
       document.getElementsByClassName('rewardButton')[0].style.display = "block";
       document.getElementsByClassName(bttnExcpt)[0].style.display = "none";
     },
+// ----------------BUTTONS END---------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     reloadSale(){window.location.reload(true);},
-    refreshData() {
-      this.userAddress = formatAddress(web3.eth.accounts.givenProvider.selectedAddress);
-      const fromAddress = web3.eth.accounts.givenProvider.selectedAddress;
 
-      auctionBox.methods
-          .getCurrentBlockNumber()
-          .call()
-          .then((n) => {
-            this.blockNumber = n;
-            document.getElementById("block_num").innerText = this.blockNumber;
-          });
-      auctionBox.methods
-          .showReward(fromAddress)
-          .call()
-          .then((n) => {
-            this.reward = numberWithCommas(truncateNumber(web3.utils.fromWei(n, 'ether')));
-            document.getElementById("balance_num").innerText = this.reward;
-          });
-    },
 
-    processDeposit() {
-      const fromAddress = web3.eth.accounts.givenProvider.selectedAddress;
-      const tboxval = document.getElementById('tbox').value;
-      const amount = web3.utils.toWei(formatNumber(tboxval), 'ether');
-      this.deposit = '';
-
-      auctionBox.methods
-          .mine(amount).send({
-        from: fromAddress,
-      }).then(() => {
-        document.getElementById('tbox').value = '';
-      });
-    },
-    processWithdraw() {
-      const fromAddress = web3.eth.accounts.givenProvider.selectedAddress;
-      const tboxval = document.getElementById('tbox').value;
-      const amount = web3.utils.toWei(formatNumber(tboxval), 'ether');
-      this.withdraw = '';
-
-      auctionBox.methods
-          .getReward(amount).send({
-        from: fromAddress,
-      }).then(() => {
-        document.getElementById('tbox').value = '';
-      });
-
-    }
 
   },
 };
@@ -204,16 +223,14 @@ body {background:none transparent !important;
 }
 
 
-/*---------------------------------------------------*/
+/*----------------BUTTONS START-----------------------------------*/
 .arrows{
   position: absolute;
   margin-top: 142px;
   margin-right: -1px;
   z-index: 2;
 }
-.blankScreen{
-  position: absolute;
-}
+
 
 /*---------------------------------------------------*/
 
@@ -221,6 +238,8 @@ body {background:none transparent !important;
   position: absolute;
   margin-top: -313px;
   margin-left: 339px;
+  cursor: pointer;
+  z-index: 10;
 }
 
 .ethButton{
@@ -249,7 +268,7 @@ body {background:none transparent !important;
 
 .rewardButton{
   position: absolute;
-  margin-top: 266px;
+  margin-top: 265px;
   margin-left: 1px;
 }
 /*---------------------------------------------------*/
@@ -283,7 +302,7 @@ body {background:none transparent !important;
 
 .rewardButtonBlue{
   position: absolute;
-  margin-top: 266px;
+  margin-top: 265px;
   margin-left: 1px;
   display: none;
 }
@@ -312,7 +331,6 @@ body {background:none transparent !important;
 }
 
 .ethWalletField{
-  border: 1px solid #fff;
   position: absolute;
   width: 59px;
   height: 59px;
@@ -324,7 +342,6 @@ body {background:none transparent !important;
 }
 
 .krkWalletField{
-  border: 1px solid #fff;
   position: absolute;
   width: 59px;
   height: 59px;
@@ -336,7 +353,6 @@ body {background:none transparent !important;
 }
 
 .rewardField{
-  border: 1px solid #fff;
   position: absolute;
   width: 59px;
   height: 59px;
@@ -346,7 +362,7 @@ body {background:none transparent !important;
   margin-left: 1px;
   cursor: pointer;
 }
-/*---------------------------------------------------*/
+/*----------------BUTTONS END-----------------------------------*/
 
 
 
