@@ -17,7 +17,6 @@
         Click a button, <div><img src="./assets/img/hexagon_blank.png" width="50px"></div> from the menu below.
       </div>
 
-      <!--        <div class="metamask-link"><a href="https://metamask.io/download.html" target="_blank">Click Here</a></div>-->
       <div class="balance" v-if="!this.userAddress.startsWith('0x')">
         <div id="balance_num" style="display: inline-block;">Connect to Metamask...<br>Then, press reload.</div>
       </div>
@@ -25,6 +24,7 @@
       <div class="txtform"><input type="text" id="tbox" name="tbox" placeholder="Enter amount"></div>
       <div class="sendButton" style="display: none">Send</div>
       <div class="resetButton" style="display: none">Reset</div>
+      <div class="textField" style="display: none"><img src="./assets/img/textField.png"></div>
       <div class="arrows"><img src="./assets/img/arrows.png" width="40px"></div>
 
       <div class="blankScreen" v-if="!this.userAddress.startsWith('0x')">
@@ -118,11 +118,7 @@ export default {
       this.resetButtons();
       this.ethButtonClicked = true;
       this.grayOutButtonsExcept('ethButton');
-      document.getElementsByClassName('ethButtonBlue')[0].style.display = "none";
-      document.getElementsByClassName('initMessage')[0].style.display = "none";
-      document.getElementsByClassName('txtform')[0].style.display = "block";
-      document.getElementsByClassName('sendButton')[0].style.display = "block";
-      document.getElementsByClassName('resetButton')[0].style.display = "block";
+      this.enableTextField();
     },
     krkButtonBlueShow(){
       if(!this.userAddress.startsWith('0x')) return;
@@ -136,11 +132,7 @@ export default {
       this.resetButtons();
       this.krkButtonClicked = true;
       this.grayOutButtonsExcept('krkButton');
-      document.getElementsByClassName('krkButtonBlue')[0].style.display = "none";
-      document.getElementsByClassName('initMessage')[0].style.display = "none";
-      document.getElementsByClassName('txtform')[0].style.display = "block";
-      document.getElementsByClassName('sendButton')[0].style.display = "block";
-      document.getElementsByClassName('resetButton')[0].style.display = "block";
+      this.enableTextField();
     },
     ethWalletButtonBlueShow(){
       if(!this.userAddress.startsWith('0x')) return;
@@ -155,11 +147,7 @@ export default {
       this.resetButtons();
       this.ethWalletButtonClicked = true;
       this.grayOutButtonsExcept('ethWalletButton');
-      document.getElementsByClassName('ethWalletButtonBlue')[0].style.display = "none";
-      document.getElementsByClassName('initMessage')[0].style.display = "none";
-      document.getElementsByClassName('txtform')[0].style.display = "none";
-      document.getElementsByClassName('sendButton')[0].style.display = "none";
-      document.getElementsByClassName('resetButton')[0].style.display = "none";
+      this.disableTextField();
     },
 
     krkWalletButtonBlueShow(){
@@ -175,11 +163,7 @@ export default {
       this.resetButtons();
       this.krkWalletButtonClicked = true;
       this.grayOutButtonsExcept('krkWalletButton');
-      document.getElementsByClassName('krkWalletButtonBlue')[0].style.display = "none";
-      document.getElementsByClassName('initMessage')[0].style.display = "none";
-      document.getElementsByClassName('txtform')[0].style.display = "none";
-      document.getElementsByClassName('sendButton')[0].style.display = "none";
-      document.getElementsByClassName('resetButton')[0].style.display = "none";
+      this.disableTextField();
     },
     rewardButtonBlueShow(){
       if(!this.userAddress.startsWith('0x')) return;
@@ -194,11 +178,7 @@ export default {
       this.resetButtons();
       this.rewardButtonClicked = true;
       this.grayOutButtonsExcept('rewardButton');
-      document.getElementsByClassName('rewardButtonBlue')[0].style.display = "none";
-      document.getElementsByClassName('initMessage')[0].style.display = "none";
-      document.getElementsByClassName('txtform')[0].style.display = "none";
-      document.getElementsByClassName('sendButton')[0].style.display = "none";
-      document.getElementsByClassName('resetButton')[0].style.display = "none";
+      this.disableTextField();
     },
     resetButtons(){
       this.ethButtonClicked = false;
@@ -214,6 +194,23 @@ export default {
       document.getElementsByClassName('krkWalletButton')[0].style.display = "block";
       document.getElementsByClassName('rewardButton')[0].style.display = "block";
       document.getElementsByClassName(bttnExcpt)[0].style.display = "none";
+    },
+
+    disableTextField(){
+      document.getElementsByClassName('ethWalletButtonBlue')[0].style.display = "none";
+      document.getElementsByClassName('initMessage')[0].style.display = "none";
+      document.getElementsByClassName('txtform')[0].style.display = "none";
+      document.getElementsByClassName('sendButton')[0].style.display = "none";
+      document.getElementsByClassName('resetButton')[0].style.display = "none";
+      document.getElementsByClassName('textField')[0].style.display = "none";
+    },
+    enableTextField(){
+      document.getElementsByClassName('krkButtonBlue')[0].style.display = "none";
+      document.getElementsByClassName('initMessage')[0].style.display = "none";
+      document.getElementsByClassName('txtform')[0].style.display = "block";
+      document.getElementsByClassName('sendButton')[0].style.display = "block";
+      document.getElementsByClassName('resetButton')[0].style.display = "block";
+      document.getElementsByClassName('textField')[0].style.display = "block";
     },
 // ----------------BUTTONS END---------------
 
@@ -445,6 +442,10 @@ body {background:none transparent !important;
 .resetButton:active {
   position:relative;
   top:1px;
+}
+.textField{
+  position: absolute;
+  margin-bottom: 32px;
 }
 
 /*----------------BUTTONS END-----------------------------------*/
