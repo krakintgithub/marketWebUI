@@ -14,16 +14,23 @@
       <div class="refreshButton" v-if="!this.userAddress.startsWith('0x')" v-on:click="reloadSale()"><img src="./assets/img/reload.png" width="32px"> </div>
 
       <div class="initMessage" v-if="this.userAddress.startsWith('0x')" v-on:click="reloadSale()">
-        Click a button, <div><img src="./assets/img/hexagon_blank.png" width="50px"></div> from the menu below.
+        Click on a button, <div><img src="./assets/img/hexagon_blank.png" width="50px"></div> from the menu below.
       </div>
 
       <div class="balance" v-if="!this.userAddress.startsWith('0x')">
         <div id="balance_num" style="display: inline-block;">Connect to Metamask...<br>Then, press reload.</div>
       </div>
 
+     <div class="ethPurchase" style="display: none;"><img src="./assets/img/krk2eth.png" width="80px"><br>KRK for ETH</div>
+     <div class="krkPurchase" style="display: none;"><img src="./assets/img/eth2krk.png" width="80px"><br>ETH for KRK</div>
+     <div class="ethStats" style="display: none;"><img src="./assets/img/ethStats.png" width="80px"><br>ETH Statistics</div>
+     <div class="krkStats" style="display: none;"><img src="./assets/img/krkStats.png" width="80px"><br>KRK Statistics</div>
+     <div class="rewardStats" style="display: none;"><img src="./assets/img/reward.png" width="80px"><br>Earnings and rewards</div>
+     <div class="ethStats" style="display: none;">Displays<br><img src="./assets/img/ethStats.png" width="50px"><br>Ethereum statistics</div>
+
       <div class="txtform"><input type="text" id="tbox" name="tbox" placeholder="Enter amount"></div>
-      <div class="sendButton" style="display: none">Send</div>
-      <div class="resetButton" style="display: none">Reset</div>
+      <div class="sendButton" style="display: none"><img src="./assets/img/send.png"></div>
+      <div class="resetButton" style="display: none" v-on:click="clearTextField"><img src="./assets/img/reset.png"></div>
       <div class="textField" style="display: none"><img src="./assets/img/textField.png"></div>
       <div class="arrows"><img src="./assets/img/arrows.png" width="40px"></div>
 
@@ -107,79 +114,133 @@ export default {
 // ----------------BUTTONS START---------------
     ethButtonBlueShow(){
       if(!this.userAddress.startsWith('0x')) return;
-      if(!this.ethButtonClicked) document.getElementsByClassName('ethButtonBlue')[0].style.display = "block";
+      if(this.ethButtonClicked) return;
+       document.getElementsByClassName('ethButtonBlue')[0].style.display = "block";
+      document.getElementsByClassName('krkPurchase')[0].style.display = "block";
+       document.getElementsByClassName('initMessage')[0].style.display = "none";
       },
     ethButtonBlueHide(){
       if(!this.userAddress.startsWith('0x')) return;
+      if(this.ethButtonClicked) return;
       document.getElementsByClassName('ethButtonBlue')[0].style.display = "none";
+      document.getElementsByClassName('krkPurchase')[0].style.display = "none";
+        if(!this.ethButtonClicked && !this.krkButtonClicked && !this.ethWalletButtonClicked && !this.krkWalletButtonClicked && !this.rewardButtonClicked) {
+          document.getElementsByClassName('initMessage')[0].style.display = "block";
+        }
       },
     ethButtonBlueClick(){
+      this.ethButtonBlueHide();
       if(!this.userAddress.startsWith('0x')) return;
       this.resetButtons();
       this.ethButtonClicked = true;
       this.grayOutButtonsExcept('ethButton');
       this.enableTextField();
     },
+ //------------------
     krkButtonBlueShow(){
       if(!this.userAddress.startsWith('0x')) return;
-      if(!this.krkButtonClicked) document.getElementsByClassName('krkButtonBlue')[0].style.display = "block";
+      if(this.krkButtonClicked) return;
+       document.getElementsByClassName('krkButtonBlue')[0].style.display = "block";
+       document.getElementsByClassName('ethPurchase')[0].style.display = "block";
+       document.getElementsByClassName('initMessage')[0].style.display = "none";
     },
     krkButtonBlueHide(){
+      if(!this.userAddress.startsWith('0x')) return;
+      if(this.krkButtonClicked) return;
       document.getElementsByClassName('krkButtonBlue')[0].style.display = "none";
+      document.getElementsByClassName('ethPurchase')[0].style.display = "none";
+      if(!this.ethButtonClicked && !this.krkButtonClicked && !this.ethWalletButtonClicked && !this.krkWalletButtonClicked && !this.rewardButtonClicked) {
+        document.getElementsByClassName('initMessage')[0].style.display = "block";
+      }
     },
     krkButtonBlueClick(){
+      this.krkButtonBlueHide();
       if(!this.userAddress.startsWith('0x')) return;
       this.resetButtons();
       this.krkButtonClicked = true;
       this.grayOutButtonsExcept('krkButton');
       this.enableTextField();
     },
+    //------------------
+
     ethWalletButtonBlueShow(){
       if(!this.userAddress.startsWith('0x')) return;
-      if(!this.ethWalletButtonClicked) document.getElementsByClassName('ethWalletButtonBlue')[0].style.display = "block";
+      if(this.ethWalletButtonClicked) return;
+       document.getElementsByClassName('ethWalletButtonBlue')[0].style.display = "block";
+       document.getElementsByClassName('ethStats')[0].style.display = "block";
+     document.getElementsByClassName('initMessage')[0].style.display = "none";
     },
     ethWalletButtonBlueHide(){
       if(!this.userAddress.startsWith('0x')) return;
+      if(this.ethWalletButtonClicked) return;
       document.getElementsByClassName('ethWalletButtonBlue')[0].style.display = "none";
+      document.getElementsByClassName('ethStats')[0].style.display = "none";
+      if(!this.ethButtonClicked && !this.krkButtonClicked && !this.ethWalletButtonClicked && !this.krkWalletButtonClicked && !this.rewardButtonClicked) {
+        document.getElementsByClassName('initMessage')[0].style.display = "block";
+      }
     },
     ethWalletButtonBlueClick(){
+      this.ethWalletButtonBlueHide();
       if(!this.userAddress.startsWith('0x')) return;
       this.resetButtons();
       this.ethWalletButtonClicked = true;
       this.grayOutButtonsExcept('ethWalletButton');
       this.disableTextField();
     },
+    //------------------
 
     krkWalletButtonBlueShow(){
       if(!this.userAddress.startsWith('0x')) return;
-      if(!this.krkWalletButtonClicked) document.getElementsByClassName('krkWalletButtonBlue')[0].style.display = "block";
+      if(this.krkWalletButtonClicked) return;
+       document.getElementsByClassName('krkWalletButtonBlue')[0].style.display = "block";
+       document.getElementsByClassName('krkStats')[0].style.display = "block";
+       document.getElementsByClassName('initMessage')[0].style.display = "none";
     },
     krkWalletButtonBlueHide(){
       if(!this.userAddress.startsWith('0x')) return;
+      if(this.krkWalletButtonClicked) return;
       document.getElementsByClassName('krkWalletButtonBlue')[0].style.display = "none";
+      document.getElementsByClassName('krkStats')[0].style.display = "none";
+      if(!this.ethButtonClicked && !this.krkButtonClicked && !this.ethWalletButtonClicked && !this.krkWalletButtonClicked && !this.rewardButtonClicked) {
+        document.getElementsByClassName('initMessage')[0].style.display = "block";
+      }
     },
     krkWalletButtonBlueClick(){
+      this.krkWalletButtonBlueHide();
       if(!this.userAddress.startsWith('0x')) return;
       this.resetButtons();
       this.krkWalletButtonClicked = true;
       this.grayOutButtonsExcept('krkWalletButton');
       this.disableTextField();
     },
+    //------------------
+
     rewardButtonBlueShow(){
       if(!this.userAddress.startsWith('0x')) return;
-      if(!this.rewardButtonClicked) document.getElementsByClassName('rewardButtonBlue')[0].style.display = "block";
+      if(this.rewardButtonClicked) return;
+      document.getElementsByClassName('rewardButtonBlue')[0].style.display = "block";
+      document.getElementsByClassName('rewardStats')[0].style.display = "block";
+       document.getElementsByClassName('initMessage')[0].style.display = "none";
     },
     rewardButtonBlueHide(){
       if(!this.userAddress.startsWith('0x')) return;
+      if(this.rewardButtonClicked) return;
       document.getElementsByClassName('rewardButtonBlue')[0].style.display = "none";
+      document.getElementsByClassName('rewardStats')[0].style.display = "none";
+      if(!this.ethButtonClicked && !this.krkButtonClicked && !this.ethWalletButtonClicked && !this.krkWalletButtonClicked && !this.rewardButtonClicked) {
+        document.getElementsByClassName('initMessage')[0].style.display = "block";
+      }
     },
     rewardButtonBlueClick(){
+      this.rewardButtonBlueHide();
       if(!this.userAddress.startsWith('0x')) return;
       this.resetButtons();
       this.rewardButtonClicked = true;
       this.grayOutButtonsExcept('rewardButton');
       this.disableTextField();
     },
+    //------------------
+
     resetButtons(){
       this.ethButtonClicked = false;
       this.krkButtonClicked = false;
@@ -228,7 +289,9 @@ export default {
 
 
     reloadSale(){window.location.reload(true);},
-
+    clearTextField(){
+      document.getElementById('tbox').value = "";
+    }
 
 
   },
@@ -391,65 +454,56 @@ body {background:none transparent !important;
   cursor: pointer;
 }
 
-
-
 .sendButton {
-  width: 60px;
   position: absolute;
   margin-bottom: 32px;
   margin-left: 315px;
-  background-color:#44c767;
-  border-radius:28px;
-  border:1px solid #18ab29;
-  display:inline-block;
-  cursor:pointer;
-  color:#ffffff;
-  font-family:Arial;
-  font-size:14px;
-  font-weight:bold;
-  padding:2px 10px;
-  text-decoration:none;
-  text-shadow:0px 1px 0px #2f6627;
-}
-.sendButton:hover {
-  background-color:#5cbf2a;
-}
-.sendButton:active {
-  position:relative;
-  top:1px;
+  cursor: pointer;
 }
 
 .resetButton {
   position: absolute;
   margin-bottom: 32px;
   margin-right: 315px;
-  background-color:#7892c2;
-  border-radius:28px;
-  border:1px solid #4e6096;
-  display:inline-block;
-  cursor:pointer;
-  color:#ffffff;
-  font-family:Arial;
-  font-size:14px;
-  font-weight:bold;
-  padding:2px 10px;
-  text-decoration:none;
-  text-shadow:0px 1px 0px #283966;
+  cursor: pointer;
 }
-.resetButton:hover {
-  background-color:#476e9e;
-}
-.resetButton:active {
-  position:relative;
-  top:1px;
-}
+
 .textField{
+  display: block;
   position: absolute;
-  margin-bottom: 32px;
+  margin-bottom: 30px;
 }
 
 /*----------------BUTTONS END-----------------------------------*/
 
+/*----------------MENU START-----------------------------------*/
+
+.ethPurchase{
+  position: absolute;
+  text-align: center;
+  margin-bottom: 195px;
+}
+.krkPurchase{
+  position: absolute;
+  text-align: center;
+  margin-bottom: 195px;
+}
+.ethStats{
+  position: absolute;
+  text-align: center;
+  margin-bottom: 195px;
+}
+.krkStats{
+  position: absolute;
+  text-align: center;
+  margin-bottom: 195px;
+}
+.rewardStats{
+  position: absolute;
+  text-align: center;
+  margin-bottom: 195px;
+}
+/*----------------MENU END-----------------------------------*/
 
 
 
