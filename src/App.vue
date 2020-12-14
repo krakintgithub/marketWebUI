@@ -13,14 +13,18 @@
 
       <div class="refreshButton" v-if="!this.userAddress.startsWith('0x')" v-on:click="reloadSale()"><img src="./assets/img/reload.png" width="32px"> </div>
 
-
+      <div class="initMessage" v-if="this.userAddress.startsWith('0x')" v-on:click="reloadSale()">
+        Click a button, <div><img src="./assets/img/hexagon_blank.png" width="50px"></div> from the menu below.
+      </div>
 
       <!--        <div class="metamask-link"><a href="https://metamask.io/download.html" target="_blank">Click Here</a></div>-->
       <div class="balance" v-if="!this.userAddress.startsWith('0x')">
         <div id="balance_num" style="display: inline-block;">Connect to Metamask...<br>Then, press reload.</div>
       </div>
 
-      <div class="txtform" v-if="!this.userAddress.startsWith('0x')"><input type="text" id="tbox" name="tbox" placeholder="Enter amount"></div>
+      <div class="txtform"><input type="text" id="tbox" name="tbox" placeholder="Enter amount"></div>
+      <div class="sendButton" style="display: none">Send</div>
+      <div class="resetButton" style="display: none">Reset</div>
       <div class="arrows"><img src="./assets/img/arrows.png" width="40px"></div>
 
       <div class="blankScreen" v-if="!this.userAddress.startsWith('0x')">
@@ -115,6 +119,10 @@ export default {
       this.ethButtonClicked = true;
       this.grayOutButtonsExcept('ethButton');
       document.getElementsByClassName('ethButtonBlue')[0].style.display = "none";
+      document.getElementsByClassName('initMessage')[0].style.display = "none";
+      document.getElementsByClassName('txtform')[0].style.display = "block";
+      document.getElementsByClassName('sendButton')[0].style.display = "block";
+      document.getElementsByClassName('resetButton')[0].style.display = "block";
     },
     krkButtonBlueShow(){
       if(!this.userAddress.startsWith('0x')) return;
@@ -129,6 +137,10 @@ export default {
       this.krkButtonClicked = true;
       this.grayOutButtonsExcept('krkButton');
       document.getElementsByClassName('krkButtonBlue')[0].style.display = "none";
+      document.getElementsByClassName('initMessage')[0].style.display = "none";
+      document.getElementsByClassName('txtform')[0].style.display = "block";
+      document.getElementsByClassName('sendButton')[0].style.display = "block";
+      document.getElementsByClassName('resetButton')[0].style.display = "block";
     },
     ethWalletButtonBlueShow(){
       if(!this.userAddress.startsWith('0x')) return;
@@ -144,6 +156,10 @@ export default {
       this.ethWalletButtonClicked = true;
       this.grayOutButtonsExcept('ethWalletButton');
       document.getElementsByClassName('ethWalletButtonBlue')[0].style.display = "none";
+      document.getElementsByClassName('initMessage')[0].style.display = "none";
+      document.getElementsByClassName('txtform')[0].style.display = "none";
+      document.getElementsByClassName('sendButton')[0].style.display = "none";
+      document.getElementsByClassName('resetButton')[0].style.display = "none";
     },
 
     krkWalletButtonBlueShow(){
@@ -160,6 +176,10 @@ export default {
       this.krkWalletButtonClicked = true;
       this.grayOutButtonsExcept('krkWalletButton');
       document.getElementsByClassName('krkWalletButtonBlue')[0].style.display = "none";
+      document.getElementsByClassName('initMessage')[0].style.display = "none";
+      document.getElementsByClassName('txtform')[0].style.display = "none";
+      document.getElementsByClassName('sendButton')[0].style.display = "none";
+      document.getElementsByClassName('resetButton')[0].style.display = "none";
     },
     rewardButtonBlueShow(){
       if(!this.userAddress.startsWith('0x')) return;
@@ -175,6 +195,10 @@ export default {
       this.rewardButtonClicked = true;
       this.grayOutButtonsExcept('rewardButton');
       document.getElementsByClassName('rewardButtonBlue')[0].style.display = "none";
+      document.getElementsByClassName('initMessage')[0].style.display = "none";
+      document.getElementsByClassName('txtform')[0].style.display = "none";
+      document.getElementsByClassName('sendButton')[0].style.display = "none";
+      document.getElementsByClassName('resetButton')[0].style.display = "none";
     },
     resetButtons(){
       this.ethButtonClicked = false;
@@ -220,6 +244,7 @@ body {background:none transparent !important;
 
 #tbox{
   width: 160px !important;
+  outline: none;
 }
 
 
@@ -240,6 +265,12 @@ body {background:none transparent !important;
   margin-left: 339px;
   cursor: pointer;
   z-index: 10;
+}
+
+.initMessage{
+  position: absolute;
+  margin-bottom: 195px;
+  text-align: center;
 }
 
 .ethButton{
@@ -362,6 +393,60 @@ body {background:none transparent !important;
   margin-left: 1px;
   cursor: pointer;
 }
+
+
+
+.sendButton {
+  width: 60px;
+  position: absolute;
+  margin-bottom: 32px;
+  margin-left: 315px;
+  background-color:#44c767;
+  border-radius:28px;
+  border:1px solid #18ab29;
+  display:inline-block;
+  cursor:pointer;
+  color:#ffffff;
+  font-family:Arial;
+  font-size:14px;
+  font-weight:bold;
+  padding:2px 10px;
+  text-decoration:none;
+  text-shadow:0px 1px 0px #2f6627;
+}
+.sendButton:hover {
+  background-color:#5cbf2a;
+}
+.sendButton:active {
+  position:relative;
+  top:1px;
+}
+
+.resetButton {
+  position: absolute;
+  margin-bottom: 32px;
+  margin-right: 315px;
+  background-color:#7892c2;
+  border-radius:28px;
+  border:1px solid #4e6096;
+  display:inline-block;
+  cursor:pointer;
+  color:#ffffff;
+  font-family:Arial;
+  font-size:14px;
+  font-weight:bold;
+  padding:2px 10px;
+  text-decoration:none;
+  text-shadow:0px 1px 0px #283966;
+}
+.resetButton:hover {
+  background-color:#476e9e;
+}
+.resetButton:active {
+  position:relative;
+  top:1px;
+}
+
 /*----------------BUTTONS END-----------------------------------*/
 
 
