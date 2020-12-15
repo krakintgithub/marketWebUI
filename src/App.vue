@@ -25,7 +25,7 @@
      <div class="krkPurchase" style="display: none;"><img src="./assets/img/eth2krk.png" width="80px"><br>ETH to KRK</div>
      <div class="ethStats" style="display: none;"><img src="./assets/img/ethStats.png" width="80px"><br>ETH Statistics</div>
      <div class="krkStats" style="display: none;"><img src="./assets/img/krkStats.png" width="80px"><br>KRK Statistics</div>
-     <div class="rewardStats" style="display: none;"><img src="./assets/img/reward.png" width="80px"><br>Earnings and rewards</div>
+     <div class="rewardStats" style="display: none;"><img src="./assets/img/reward.png" width="80px"><br>Earnings and Rewards</div>
      <div class="ethStats" style="display: none;">Displays<br><img src="./assets/img/ethStats.png" width="50px"><br>Ethereum statistics</div>
 
       <div class="txtform"><input type="text" id="tbox" name="tbox" placeholder="Enter amount"></div>
@@ -84,16 +84,14 @@ import auctionBox from '../contracts/auctionBoxInstance';
 //   return x.replace(/,/g, '');
 // }
 
-function formatAddress(address) {
-  return address.substr(0, 5) + "..." + address.substr(35);
-}
+// function formatAddress(address) {
+//   return address.substr(0, 5) + "..." + address.substr(35);
+// }
 
 
 export default {
   name: 'APP',
-  created: function () {
-    this.interval = setInterval(() => this.refreshData(), 3000);
-  },
+  created: function () {},
   data: function () {
     return {
       ethButtonClicked:false,
@@ -103,32 +101,29 @@ export default {
       rewardButtonClicked:false,
 
 
-      userAddress: 'Connect to Metamask, then reload.',
-      ethInWei:1000000000000000000,
+      userAddress: 'Connect to Metamask',
       ethReturnNoBonus:0,
       ethReturnBonus:0,
       circulatingUserKrk:0,
-      krkReturn:0, //*
+      krkReturn:0,
       userEth:0,
       circulatingKrk:0,
       krakintTotalEthEarnings:0,
       totalBurnedKRK:0,
       totalMintedKRK:0,
       circulatingEth:0,
-      investorsCirculatinhEarnings:0,
       totalUserFees:0,
       totalDepositedEth:0,
       totalWithdrawnEth:0,
       totalFeesPaid:0,
-      totalKrakintEarnings:0,
-
-
     };
   },
   beforeMount() {
-    this.userAddress = formatAddress(web3.eth.accounts.givenProvider.selectedAddress);
-    if(this.userAddress.startsWith('0x')) document.getElementsByClassName('blankScreen')[0].style.display = "none";
-  },
+    const addrr = web3.eth.accounts.givenProvider.selectedAddress;
+    if(addrr!=null) {
+      this.userAddress = addrr;
+    }
+   },
   methods: {
 // ----------------BUTTONS START---------------
     ethButtonBlueShow(){
@@ -205,6 +200,7 @@ export default {
       this.ethWalletButtonClicked = true;
       this.grayOutButtonsExcept('ethWalletButton');
       this.disableTextField();
+      this.getEthStats();
     },
     //------------------
 
@@ -231,6 +227,7 @@ export default {
       this.krkWalletButtonClicked = true;
       this.grayOutButtonsExcept('krkWalletButton');
       this.disableTextField();
+      this.getKrkStats();
     },
     //------------------
 
@@ -257,8 +254,10 @@ export default {
       this.rewardButtonClicked = true;
       this.grayOutButtonsExcept('rewardButton');
       this.disableTextField();
+      this.getRewardStats();
     },
     //------------------
+
 
     resetButtons(){
       this.ethButtonClicked = false;
@@ -298,42 +297,42 @@ export default {
       document.getElementById('tbox').value = "";
     },
 // ----------------CONTRACT FUNCTIONS START---------------
-
     getEthStats(){
       this.getKrakintTotalEthEarnings();
       this.getCirculatingEth();
-      this.getTotalUserFees(this.userAddress);
+      this.getTotalUserFees();
       this.getTotalDepositedEth();
       this.getTotalWithdrawnEth();
       this.getTotalFeesPaid();
     },
     getKrkStats(){
-      this.getKrkReturn(this.ethInWei);
+      this.getKrkReturn(web3.utils.toWei('1', 'ether'));
       this.getCirculatingKrk();
-      this.getCirculatingUserKrk(this.userAddress);
+      this.getCirculatingUserKrk();
       this.getTotalBurnedKRK();
       this.getTotalMintedKRK();
     },
     getRewardStats(){
-      this.getCirculatingUserKrk(this.userAddress)
-          .then(this.getKrkReturn(this.circulatingUserKrk)
-          .then(this.getEthReturnBonus(this.circulatingUserKrk, this.userAddress)
-          .then(this.getEthReturnNoBonus(this.circulatingUserKrk, this.userAddress)
-          )));
+      this.getCirculatingUserKrk();
+      this.getKrkReturn(this.circulatingUserKrk);
+      this.getEthReturnBonus(this.circulatingUserKrk);
+      this.getEthReturnNoBonus(this.circulatingUserKrk);
       this.getTotalUserFees(this.userAddress);
     },
 
-    getEthReturnNoBonus(krkAmount, userAddress){
+    getEthReturnNoBonus(krkAmount){
+      const address = web3.eth.accounts.givenProvider.selectedAddress;
       auctionBox.methods
-          .getEthReturnNoBonus(krkAmount, userAddress)
+          .getEthReturnNoBonus(krkAmount, address)
           .call()
           .then((n) => {
             this.ethReturnNoBonus = n;
           });
     },
-    getEthReturnBonus(krkAmount, userAddress){
+    getEthReturnBonus(krkAmount){
+      const address = web3.eth.accounts.givenProvider.selectedAddress;
       auctionBox.methods
-          .getEthReturnBonus(krkAmount, userAddress)
+          .getEthReturnBonus(krkAmount, address)
           .call()
           .then((n) => {
             this.ethReturnNoBonus = n;
@@ -371,25 +370,28 @@ export default {
             this.krakintTotalEthEarnings = n;
           });
     },
-    getUserEth(userAddress){
+    getUserEth(){
+      const address = web3.eth.accounts.givenProvider.selectedAddress;
       auctionBox.methods
-          .getUserEth(userAddress)
+          .getUserEth(address)
           .call()
           .then((n) => {
             this.userEth = n;
           });
     },
-    getCirculatingUserKrk(userAddress){
+    getCirculatingUserKrk(){
+      const address = web3.eth.accounts.givenProvider.selectedAddress;
       auctionBox.methods
-          .getCirculatingUserKrk(userAddress)
+          .getCirculatingUserKrk(address)
           .call()
           .then((n) => {
             this.circulatingUserKrk = n;
           });
     },
-    getTotalUserFees(userAddress){
+    getTotalUserFees(){
+      const address = web3.eth.accounts.givenProvider.selectedAddress;
       auctionBox.methods
-          .getTotalUserFees(userAddress)
+          .getTotalUserFees(address)
           .call()
           .then((n) => {
             this.totalUserFees = n;

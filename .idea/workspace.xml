@@ -23,11 +23,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/img/eth2krk.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/img/eth2krk.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/img/ethStats.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/img/ethStats.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/img/krk2eth.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/img/krk2eth.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/img/krkStats.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/img/krkStats.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/img/reward.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/img/reward.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,7 +86,8 @@
       <workItem from="1607797445329" duration="837000" />
       <workItem from="1607798309912" duration="2015000" />
       <workItem from="1607806039915" duration="1485000" />
-      <workItem from="1607808014432" duration="43846000" />
+      <workItem from="1607808014432" duration="46785000" />
+      <workItem from="1607997206493" duration="853000" />
     </task>
     <servers />
   </component>
