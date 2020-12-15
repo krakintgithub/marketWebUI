@@ -170,16 +170,21 @@ export default {
    },
   methods: {
 // ----------------BUTTONS START---------------
-    switchBlueShow(on){
-      var off = ["ethButtonBlue","krkPurchase","initMessage","ethStats_select","krkStats_select","rewardStats_select",
-      "txtform","sendButton","resetButton","textField","eth_select","krk_select"];
-
+    switchOff(off){
       for (let i = 0; i < off.length; i++) {
         document.getElementsByClassName(off[i])[0].style.display = "none";
       }
+    },
+    switchOn(on){
       for (let i = 0; i < on.length; i++) {
         document.getElementsByClassName(on[i])[0].style.display = "block";
       }
+    },
+    switchBlueShow(on){
+      var off = ["ethButtonBlue","krkPurchase","initMessage","ethStats_select","krkStats_select","rewardStats_select",
+      "txtform","sendButton","resetButton","textField","eth_select","krk_select"];
+      this.switchOff(off);
+      this.switchOn(on);
     },
     ethButtonBlueShow(){
       if(!this.userAddress.startsWith('0x')) return;
@@ -216,16 +221,11 @@ export default {
       this.enableTextField();
       this.getReturnRate();
 
-      document.getElementsByClassName('ethStats_select')[0].style.display = "none";
-      document.getElementsByClassName('krkStats_select')[0].style.display = "none";
-      document.getElementsByClassName('rewardStats_select')[0].style.display = "none";
-      document.getElementsByClassName('txtform')[0].style.display = "block";
-      document.getElementsByClassName('sendButton')[0].style.display = "block";
-      document.getElementsByClassName('resetButton')[0].style.display = "block";
-      document.getElementsByClassName('textField')[0].style.display = "block";
-      document.getElementsByClassName('eth_select')[0].style.display = "block";
-      document.getElementsByClassName('krk_select')[0].style.display = "none";
+      var off = ["ethStats_select","krkStats_select","rewardStats_select","rewardStats_select","krk_select"];
+      var on = ["txtform","sendButton","resetButton","textField","eth_select"];
 
+      this.switchOff(off);
+      this.switchOn(on);
     },
  //------------------
     krkButtonBlueShow(){
@@ -263,15 +263,11 @@ export default {
       this.enableTextField();
       this.getCurrentRate();
 
-      document.getElementsByClassName('ethStats_select')[0].style.display = "none";
-      document.getElementsByClassName('krkStats_select')[0].style.display = "none";
-      document.getElementsByClassName('rewardStats_select')[0].style.display = "none";
-      document.getElementsByClassName('txtform')[0].style.display = "block";
-      document.getElementsByClassName('sendButton')[0].style.display = "block";
-      document.getElementsByClassName('resetButton')[0].style.display = "block";
-      document.getElementsByClassName('textField')[0].style.display = "block";
-      document.getElementsByClassName('eth_select')[0].style.display = "none";
-      document.getElementsByClassName('krk_select')[0].style.display = "block";
+      var off = ["ethStats_select","krkStats_select","rewardStats_select","eth_select"];
+      var on = ["txtform","sendButton","resetButton","textField","krk_select"];
+
+      this.switchOff(off);
+      this.switchOn(on);
     },
     //------------------
     ethWalletButtonBlueShow(){
@@ -308,16 +304,12 @@ export default {
       this.grayOutButtonsExcept('ethWalletButton');
       this.disableTextField();
       this.getEthStats();
-      document.getElementsByClassName('ethStats_select')[0].style.display = "block";
-      document.getElementsByClassName('krkStats_select')[0].style.display = "none";
-      document.getElementsByClassName('rewardStats_select')[0].style.display = "none";
-      document.getElementsByClassName('txtform')[0].style.display = "none";
-      document.getElementsByClassName('sendButton')[0].style.display = "none";
-      document.getElementsByClassName('resetButton')[0].style.display = "none";
-      document.getElementsByClassName('textField')[0].style.display = "none";
-      document.getElementsByClassName('eth_select')[0].style.display = "none";
-      document.getElementsByClassName('krk_select')[0].style.display = "none";
 
+      var off = ["krkStats_select","rewardStats_select","txtform","sendButton","resetButton","textField","eth_select","krk_select"];
+      var on = ["ethStats_select"];
+
+      this.switchOff(off);
+      this.switchOn(on);
     },
     //------------------
     krkWalletButtonBlueShow(){
@@ -354,16 +346,12 @@ export default {
       this.grayOutButtonsExcept('krkWalletButton');
       this.disableTextField();
       this.getKrkStats();
-      document.getElementsByClassName('ethStats_select')[0].style.display = "none";
-      document.getElementsByClassName('krkStats_select')[0].style.display = "block";
-      document.getElementsByClassName('rewardStats_select')[0].style.display = "none";
-      document.getElementsByClassName('txtform')[0].style.display = "none";
-      document.getElementsByClassName('sendButton')[0].style.display = "none";
-      document.getElementsByClassName('resetButton')[0].style.display = "none";
-      document.getElementsByClassName('textField')[0].style.display = "none";
-      document.getElementsByClassName('eth_select')[0].style.display = "none";
-      document.getElementsByClassName('krk_select')[0].style.display = "none";
 
+      var off = ["ethStats_select","rewardStats_select","txtform","sendButton","resetButton","textField","eth_select","krk_select"];
+      var on = ["krkStats_select"];
+
+      this.switchOff(off);
+      this.switchOn(on);
     },
     //------------------
     rewardButtonBlueShow(){
@@ -400,21 +388,14 @@ export default {
       this.grayOutButtonsExcept('rewardButton');
       this.disableTextField();
       this.getRewardStats();
-      document.getElementsByClassName('ethStats_select')[0].style.display = "none";
-      document.getElementsByClassName('krkStats_select')[0].style.display = "none";
-      document.getElementsByClassName('rewardStats_select')[0].style.display = "block";
-      document.getElementsByClassName('txtform')[0].style.display = "none";
-      document.getElementsByClassName('sendButton')[0].style.display = "none";
-      document.getElementsByClassName('resetButton')[0].style.display = "none";
-      document.getElementsByClassName('textField')[0].style.display = "none";
-      document.getElementsByClassName('eth_select')[0].style.display = "none";
-      document.getElementsByClassName('krk_select')[0].style.display = "none";
 
+      var off = ["ethStats_select","krkStats_select","txtform","sendButton","resetButton","textField","eth_select","krk_select"];
+      var on = ["rewardStats_select"];
 
+      this.switchOff(off);
+      this.switchOn(on);
     },
     //------------------
-
-
     resetButtons(){
       this.ethButtonClicked = false;
       this.krkButtonClicked = false;
