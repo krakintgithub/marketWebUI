@@ -21,8 +21,8 @@
         <div id="balance_num" style="display: inline-block;">Connect to Metamask...<br>Then, press reload.</div>
       </div>
 
-     <div class="ethPurchase" style="display: none;"><img src="./assets/img/krk2eth.png" width="80px"><br>KRK for ETH</div>
-     <div class="krkPurchase" style="display: none;"><img src="./assets/img/eth2krk.png" width="80px"><br>ETH for KRK</div>
+     <div class="ethPurchase" style="display: none;"><img src="./assets/img/krk2eth.png" width="80px"><br>KRK to ETH</div>
+     <div class="krkPurchase" style="display: none;"><img src="./assets/img/eth2krk.png" width="80px"><br>ETH to KRK</div>
      <div class="ethStats" style="display: none;"><img src="./assets/img/ethStats.png" width="80px"><br>ETH Statistics</div>
      <div class="krkStats" style="display: none;"><img src="./assets/img/krkStats.png" width="80px"><br>KRK Statistics</div>
      <div class="rewardStats" style="display: none;"><img src="./assets/img/reward.png" width="80px"><br>Earnings and rewards</div>
@@ -65,7 +65,7 @@
 
 <script>
 import web3 from '../contracts/web3';
-// import auctionBox from '../contracts/auctionBoxInstance';
+import auctionBox from '../contracts/auctionBoxInstance';
 
 
 
@@ -102,7 +102,26 @@ export default {
       krkWalletButtonClicked:false,
       rewardButtonClicked:false,
 
-      userAddress: 'Connect to Metamask, then reload.'
+
+      userAddress: 'Connect to Metamask, then reload.',
+      ethInWei:1000000000000000000,
+      ethReturnNoBonus:0,
+      ethReturnBonus:0,
+      circulatingUserKrk:0,
+      krkReturn:0, //*
+      userEth:0,
+      circulatingKrk:0,
+      krakintTotalEthEarnings:0,
+      totalBurnedKRK:0,
+      totalMintedKRK:0,
+      circulatingEth:0,
+      investorsCirculatinhEarnings:0,
+      totalUserFees:0,
+      totalDepositedEth:0,
+      totalWithdrawnEth:0,
+      totalFeesPaid:0,
+      totalKrakintEarnings:0,
+
 
     };
   },
@@ -116,7 +135,7 @@ export default {
       if(!this.userAddress.startsWith('0x')) return;
       if(this.ethButtonClicked) return;
        document.getElementsByClassName('ethButtonBlue')[0].style.display = "block";
-      document.getElementsByClassName('krkPurchase')[0].style.display = "block";
+       document.getElementsByClassName('krkPurchase')[0].style.display = "block";
        document.getElementsByClassName('initMessage')[0].style.display = "none";
       },
     ethButtonBlueHide(){
@@ -168,7 +187,7 @@ export default {
       if(this.ethWalletButtonClicked) return;
        document.getElementsByClassName('ethWalletButtonBlue')[0].style.display = "block";
        document.getElementsByClassName('ethStats')[0].style.display = "block";
-     document.getElementsByClassName('initMessage')[0].style.display = "none";
+       document.getElementsByClassName('initMessage')[0].style.display = "none";
     },
     ethWalletButtonBlueHide(){
       if(!this.userAddress.startsWith('0x')) return;
@@ -218,15 +237,15 @@ export default {
     rewardButtonBlueShow(){
       if(!this.userAddress.startsWith('0x')) return;
       if(this.rewardButtonClicked) return;
-      document.getElementsByClassName('rewardButtonBlue')[0].style.display = "block";
-      document.getElementsByClassName('rewardStats')[0].style.display = "block";
+       document.getElementsByClassName('rewardButtonBlue')[0].style.display = "block";
+       document.getElementsByClassName('rewardStats')[0].style.display = "block";
        document.getElementsByClassName('initMessage')[0].style.display = "none";
     },
     rewardButtonBlueHide(){
       if(!this.userAddress.startsWith('0x')) return;
       if(this.rewardButtonClicked) return;
-      document.getElementsByClassName('rewardButtonBlue')[0].style.display = "none";
-      document.getElementsByClassName('rewardStats')[0].style.display = "none";
+       document.getElementsByClassName('rewardButtonBlue')[0].style.display = "none";
+       document.getElementsByClassName('rewardStats')[0].style.display = "none";
       if(!this.ethButtonClicked && !this.krkButtonClicked && !this.ethWalletButtonClicked && !this.krkWalletButtonClicked && !this.rewardButtonClicked) {
         document.getElementsByClassName('initMessage')[0].style.display = "block";
       }
@@ -274,25 +293,149 @@ export default {
       document.getElementsByClassName('textField')[0].style.display = "block";
     },
 // ----------------BUTTONS END---------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     reloadSale(){window.location.reload(true);},
     clearTextField(){
       document.getElementById('tbox').value = "";
-    }
+    },
+// ----------------CONTRACT FUNCTIONS START---------------
 
+    getEthStats(){
+      this.getKrakintTotalEthEarnings();
+      this.getCirculatingEth();
+      this.getTotalUserFees(this.userAddress);
+      this.getTotalDepositedEth();
+      this.getTotalWithdrawnEth();
+      this.getTotalFeesPaid();
+    },
+    getKrkStats(){
+      this.getKrkReturn(this.ethInWei);
+      this.getCirculatingKrk();
+      this.getCirculatingUserKrk(this.userAddress);
+      this.getTotalBurnedKRK();
+      this.getTotalMintedKRK();
+    },
+    getRewardStats(){
+      this.getCirculatingUserKrk(this.userAddress)
+          .then(this.getKrkReturn(this.circulatingUserKrk)
+          .then(this.getEthReturnBonus(this.circulatingUserKrk, this.userAddress)
+          .then(this.getEthReturnNoBonus(this.circulatingUserKrk, this.userAddress)
+          )));
+      this.getTotalUserFees(this.userAddress);
+    },
+
+    getEthReturnNoBonus(krkAmount, userAddress){
+      auctionBox.methods
+          .getEthReturnNoBonus(krkAmount, userAddress)
+          .call()
+          .then((n) => {
+            this.ethReturnNoBonus = n;
+          });
+    },
+    getEthReturnBonus(krkAmount, userAddress){
+      auctionBox.methods
+          .getEthReturnBonus(krkAmount, userAddress)
+          .call()
+          .then((n) => {
+            this.ethReturnNoBonus = n;
+          });
+    },
+    getKrkReturn(amount){
+      auctionBox.methods
+          .getKrkReturn(amount)
+          .call()
+          .then((n) => {
+            this.krkReturn = n;
+          });
+    },
+    getCirculatingKrk(){
+      auctionBox.methods
+          .getCirculatingKrk()
+          .call()
+          .then((n) => {
+            this.circulatingKrk = n;
+          });
+    },
+    getCirculatingEth(){
+      auctionBox.methods
+          .getCirculatingEth()
+          .call()
+          .then((n) => {
+            this.circulatingEth = n;
+          });
+    },
+    getKrakintTotalEthEarnings(){
+      auctionBox.methods
+          .getKrakintTotalEthEarnings()
+          .call()
+          .then((n) => {
+            this.krakintTotalEthEarnings = n;
+          });
+    },
+    getUserEth(userAddress){
+      auctionBox.methods
+          .getUserEth(userAddress)
+          .call()
+          .then((n) => {
+            this.userEth = n;
+          });
+    },
+    getCirculatingUserKrk(userAddress){
+      auctionBox.methods
+          .getCirculatingUserKrk(userAddress)
+          .call()
+          .then((n) => {
+            this.circulatingUserKrk = n;
+          });
+    },
+    getTotalUserFees(userAddress){
+      auctionBox.methods
+          .getTotalUserFees(userAddress)
+          .call()
+          .then((n) => {
+            this.totalUserFees = n;
+          });
+    },
+    getTotalBurnedKRK(){
+      auctionBox.methods
+          .getTotalBurnedKRK()
+          .call()
+          .then((n) => {
+            this.totalBurnedKRK = n;
+          });
+    },
+    getTotalMintedKRK(){
+      auctionBox.methods
+          .getTotalMintedKRK()
+          .call()
+          .then((n) => {
+            this.totalMintedKRK = n;
+          });
+    },
+    getTotalDepositedEth(){
+      auctionBox.methods
+          .getTotalDepositedEth()
+          .call()
+          .then((n) => {
+            this.totalDepositedEth = n;
+          });
+    },
+    getTotalWithdrawnEth(){
+      auctionBox.methods
+          .getTotalWithdrawnEth()
+          .call()
+          .then((n) => {
+            this.totalWithdrawnEth = n;
+          });
+    },
+    getTotalFeesPaid(){
+      auctionBox.methods
+          .getTotalFeesPaid()
+          .call()
+          .then((n) => {
+            this.totalFeesPaid = n;
+          });
+    },
+// ----------------CONTRACT FUNCTIONS END---------------
 
   },
 };
