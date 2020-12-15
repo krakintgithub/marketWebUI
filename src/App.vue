@@ -404,29 +404,21 @@ export default {
       this.rewardButtonClicked = false;
     },
     grayOutButtonsExcept(bttnExcpt){
-      document.getElementsByClassName('ethButton')[0].style.display = "block";
-      document.getElementsByClassName('krkButton')[0].style.display = "block";
-      document.getElementsByClassName('ethWalletButton')[0].style.display = "block";
-      document.getElementsByClassName('krkWalletButton')[0].style.display = "block";
-      document.getElementsByClassName('rewardButton')[0].style.display = "block";
+      var on = ["ethButton","krkButton","ethWalletButton","krkWalletButton","rewardButton"];
+      this.switchOn(on);
       document.getElementsByClassName(bttnExcpt)[0].style.display = "none";
     },
 
     disableTextField(){
-      document.getElementsByClassName('ethWalletButtonBlue')[0].style.display = "none";
-      document.getElementsByClassName('initMessage')[0].style.display = "none";
-      document.getElementsByClassName('txtform')[0].style.display = "none";
-      document.getElementsByClassName('sendButton')[0].style.display = "none";
-      document.getElementsByClassName('resetButton')[0].style.display = "none";
-      document.getElementsByClassName('textField')[0].style.display = "none";
+      var off = ["ethWalletButtonBlue","initMessage","txtform","sendButton","resetButton","textField"];
+      this.switchOff(off);
     },
     enableTextField(){
-      document.getElementsByClassName('krkButtonBlue')[0].style.display = "none";
-      document.getElementsByClassName('initMessage')[0].style.display = "none";
-      document.getElementsByClassName('txtform')[0].style.display = "block";
-      document.getElementsByClassName('sendButton')[0].style.display = "block";
-      document.getElementsByClassName('resetButton')[0].style.display = "block";
-      document.getElementsByClassName('textField')[0].style.display = "block";
+      var off = ["krkButtonBlue","initMessage"];
+      var on = ["txtform","sendButton","resetButton","textField"];
+
+      this.switchOff(off);
+      this.switchOn(on);
     },
 // ----------------BUTTONS END---------------
     reloadSale(){window.location.reload(true);},
