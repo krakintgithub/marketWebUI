@@ -170,21 +170,22 @@ export default {
    },
   methods: {
 // ----------------BUTTONS START---------------
+    switchBlueShow(on){
+      var off = ["ethButtonBlue","krkPurchase","initMessage","ethStats_select","krkStats_select","rewardStats_select",
+      "txtform","sendButton","resetButton","textField","eth_select","krk_select"];
+
+      for (let i = 0; i < off.length; i++) {
+        document.getElementsByClassName(off[i])[0].style.display = "none";
+      }
+      for (let i = 0; i < on.length; i++) {
+        document.getElementsByClassName(on[i])[0].style.display = "block";
+      }
+    },
     ethButtonBlueShow(){
       if(!this.userAddress.startsWith('0x')) return;
       if(this.ethButtonClicked) return;
-       document.getElementsByClassName('ethButtonBlue')[0].style.display = "block";
-       document.getElementsByClassName('krkPurchase')[0].style.display = "block";
-       document.getElementsByClassName('initMessage')[0].style.display = "none";
-       document.getElementsByClassName('ethStats_select')[0].style.display = "none";
-       document.getElementsByClassName('krkStats_select')[0].style.display = "none";
-       document.getElementsByClassName('rewardStats_select')[0].style.display = "none";
-       document.getElementsByClassName('txtform')[0].style.display = "none";
-       document.getElementsByClassName('sendButton')[0].style.display = "none";
-       document.getElementsByClassName('resetButton')[0].style.display = "none";
-       document.getElementsByClassName('textField')[0].style.display = "none";
-       document.getElementsByClassName('eth_select')[0].style.display = "none";
-       document.getElementsByClassName('krk_select')[0].style.display = "none";
+      var on = ["ethButtonBlue","krkPurchase"];
+      this.switchBlueShow(on);
       },
     ethButtonBlueHide(){
       if(!this.userAddress.startsWith('0x')) return;
@@ -230,18 +231,8 @@ export default {
     krkButtonBlueShow(){
       if(!this.userAddress.startsWith('0x')) return;
       if(this.krkButtonClicked) return;
-       document.getElementsByClassName('krkButtonBlue')[0].style.display = "block";
-       document.getElementsByClassName('ethPurchase')[0].style.display = "block";
-       document.getElementsByClassName('initMessage')[0].style.display = "none";
-       document.getElementsByClassName('ethStats_select')[0].style.display = "none";
-       document.getElementsByClassName('krkStats_select')[0].style.display = "none";
-       document.getElementsByClassName('rewardStats_select')[0].style.display = "none";
-       document.getElementsByClassName('txtform')[0].style.display = "none";
-       document.getElementsByClassName('sendButton')[0].style.display = "none";
-       document.getElementsByClassName('resetButton')[0].style.display = "none";
-       document.getElementsByClassName('textField')[0].style.display = "none";
-       document.getElementsByClassName('eth_select')[0].style.display = "none";
-       document.getElementsByClassName('krk_select')[0].style.display = "none";
+      var on = ["krkButtonBlue","ethPurchase"];
+      this.switchBlueShow(on);
     },
     krkButtonBlueHide(){
       if(!this.userAddress.startsWith('0x')) return;
@@ -283,22 +274,11 @@ export default {
       document.getElementsByClassName('krk_select')[0].style.display = "block";
     },
     //------------------
-
     ethWalletButtonBlueShow(){
       if(!this.userAddress.startsWith('0x')) return;
       if(this.ethWalletButtonClicked) return;
-       document.getElementsByClassName('ethWalletButtonBlue')[0].style.display = "block";
-       document.getElementsByClassName('ethStats')[0].style.display = "block";
-       document.getElementsByClassName('initMessage')[0].style.display = "none";
-       document.getElementsByClassName('ethStats_select')[0].style.display = "none";
-       document.getElementsByClassName('krkStats_select')[0].style.display = "none";
-       document.getElementsByClassName('rewardStats_select')[0].style.display = "none";
-       document.getElementsByClassName('txtform')[0].style.display = "none";
-       document.getElementsByClassName('sendButton')[0].style.display = "none";
-       document.getElementsByClassName('resetButton')[0].style.display = "none";
-       document.getElementsByClassName('textField')[0].style.display = "none";
-       document.getElementsByClassName('eth_select')[0].style.display = "none";
-       document.getElementsByClassName('krk_select')[0].style.display = "none";
+      var on = ["ethWalletButtonBlue","ethStats"];
+      this.switchBlueShow(on);
     },
     ethWalletButtonBlueHide(){
       if(!this.userAddress.startsWith('0x')) return;
@@ -340,22 +320,11 @@ export default {
 
     },
     //------------------
-
     krkWalletButtonBlueShow(){
       if(!this.userAddress.startsWith('0x')) return;
       if(this.krkWalletButtonClicked) return;
-       document.getElementsByClassName('krkWalletButtonBlue')[0].style.display = "block";
-       document.getElementsByClassName('krkStats')[0].style.display = "block";
-       document.getElementsByClassName('initMessage')[0].style.display = "none";
-       document.getElementsByClassName('ethStats_select')[0].style.display = "none";
-       document.getElementsByClassName('krkStats_select')[0].style.display = "none";
-       document.getElementsByClassName('rewardStats_select')[0].style.display = "none";
-       document.getElementsByClassName('txtform')[0].style.display = "none";
-       document.getElementsByClassName('sendButton')[0].style.display = "none";
-       document.getElementsByClassName('resetButton')[0].style.display = "none";
-       document.getElementsByClassName('textField')[0].style.display = "none";
-       document.getElementsByClassName('eth_select')[0].style.display = "none";
-       document.getElementsByClassName('krk_select')[0].style.display = "none";
+      var on = ["krkWalletButtonBlue","krkStats"];
+      this.switchBlueShow(on);
     },
     krkWalletButtonBlueHide(){
       if(!this.userAddress.startsWith('0x')) return;
@@ -397,22 +366,11 @@ export default {
 
     },
     //------------------
-
     rewardButtonBlueShow(){
       if(!this.userAddress.startsWith('0x')) return;
       if(this.rewardButtonClicked) return;
-       document.getElementsByClassName('rewardButtonBlue')[0].style.display = "block";
-       document.getElementsByClassName('rewardStats')[0].style.display = "block";
-       document.getElementsByClassName('initMessage')[0].style.display = "none";
-       document.getElementsByClassName('ethStats_select')[0].style.display = "none";
-       document.getElementsByClassName('krkStats_select')[0].style.display = "none";
-       document.getElementsByClassName('rewardStats_select')[0].style.display = "none";
-       document.getElementsByClassName('txtform')[0].style.display = "none";
-       document.getElementsByClassName('sendButton')[0].style.display = "none";
-       document.getElementsByClassName('resetButton')[0].style.display = "none";
-       document.getElementsByClassName('textField')[0].style.display = "none";
-       document.getElementsByClassName('eth_select')[0].style.display = "none";
-       document.getElementsByClassName('krk_select')[0].style.display = "none";
+      var on = ["rewardButtonBlue","rewardStats"];
+      this.switchBlueShow(on);
     },
     rewardButtonBlueHide(){
       if(!this.userAddress.startsWith('0x')) return;
@@ -855,62 +813,18 @@ body {background:none transparent !important;
 /*----------------BUTTONS END-----------------------------------*/
 
 /*----------------MENU START-----------------------------------*/
-
-.ethPurchase{
-  position: absolute;
-  text-align: center;
-  margin-bottom: 195px;
-}
-.krkPurchase{
-  position: absolute;
-  text-align: center;
-  margin-bottom: 195px;
-}
-.ethStats{
-  position: absolute;
-  text-align: center;
-  margin-bottom: 195px;
-}
-.krkStats{
-  position: absolute;
-  text-align: center;
-  margin-bottom: 195px;
-}
-.rewardStats{
+.eth_select, .krk_select, .rewardStats, .krkStats, .ethStats, .krkPurchase, .ethPurchase{
   position: absolute;
   text-align: center;
   margin-bottom: 195px;
 }
 
-.ethStats_select{
+.krkStats_select, .rewardStats_select, .ethStats_select{
   position: absolute;
   text-align: left;
-  margin-bottom: 195px;
-}
-
-.krkStats_select{
-  position: absolute;
-  text-align: left;
-  margin-bottom: 195px;
-}
-.rewardStats_select{
-  position: absolute;
-  text-align: left;
-  margin-bottom: 195px;
-}
-.eth_select{
-  position: absolute;
-  text-align: center;
-  margin-bottom: 195px;
-}
-.krk_select{
-  position: absolute;
-  text-align: center;
   margin-bottom: 195px;
 }
 /*----------------MENU END-----------------------------------*/
-
-
 .bold{
   font-weight: bold;
   display:inline;
