@@ -168,6 +168,10 @@ export default {
        document.getElementsByClassName('ethStats_select')[0].style.display = "none";
        document.getElementsByClassName('krkStats_select')[0].style.display = "none";
        document.getElementsByClassName('rewardStats_select')[0].style.display = "none";
+       document.getElementsByClassName('txtform')[0].style.display = "none";
+       document.getElementsByClassName('sendButton')[0].style.display = "none";
+       document.getElementsByClassName('resetButton')[0].style.display = "none";
+       document.getElementsByClassName('textField')[0].style.display = "none";
       },
     ethButtonBlueHide(){
       if(!this.userAddress.startsWith('0x')) return;
@@ -180,6 +184,12 @@ export default {
         if(this.ethWalletButtonClicked){ document.getElementsByClassName('ethStats_select')[0].style.display = "block";}
         else if(this.krkWalletButtonClicked){ document.getElementsByClassName('krkStats_select')[0].style.display = "block";}
         else if(this.rewardButtonClicked){ document.getElementsByClassName('rewardStats_select')[0].style.display = "block";}
+        else if(this.ethButtonClicked || this.krkButtonClicked){
+          document.getElementsByClassName('txtform')[0].style.display = "block";
+          document.getElementsByClassName('sendButton')[0].style.display = "block";
+          document.getElementsByClassName('resetButton')[0].style.display = "block";
+          document.getElementsByClassName('textField')[0].style.display = "block";
+        }
       },
     ethButtonBlueClick(){
       this.ethButtonBlueHide();
@@ -191,6 +201,10 @@ export default {
       document.getElementsByClassName('ethStats_select')[0].style.display = "none";
       document.getElementsByClassName('krkStats_select')[0].style.display = "none";
       document.getElementsByClassName('rewardStats_select')[0].style.display = "none";
+      document.getElementsByClassName('txtform')[0].style.display = "block";
+      document.getElementsByClassName('sendButton')[0].style.display = "block";
+      document.getElementsByClassName('resetButton')[0].style.display = "block";
+      document.getElementsByClassName('textField')[0].style.display = "block";
 
     },
  //------------------
@@ -203,6 +217,10 @@ export default {
        document.getElementsByClassName('ethStats_select')[0].style.display = "none";
        document.getElementsByClassName('krkStats_select')[0].style.display = "none";
        document.getElementsByClassName('rewardStats_select')[0].style.display = "none";
+       document.getElementsByClassName('txtform')[0].style.display = "none";
+       document.getElementsByClassName('sendButton')[0].style.display = "none";
+       document.getElementsByClassName('resetButton')[0].style.display = "none";
+       document.getElementsByClassName('textField')[0].style.display = "none";
     },
     krkButtonBlueHide(){
       if(!this.userAddress.startsWith('0x')) return;
@@ -215,6 +233,12 @@ export default {
       if(this.ethWalletButtonClicked){ document.getElementsByClassName('ethStats_select')[0].style.display = "block";}
       else if(this.krkWalletButtonClicked){ document.getElementsByClassName('krkStats_select')[0].style.display = "block";}
       else if(this.rewardButtonClicked){ document.getElementsByClassName('rewardStats_select')[0].style.display = "block";}
+      else if(this.ethButtonClicked || this.krkButtonClicked){
+        document.getElementsByClassName('txtform')[0].style.display = "block";
+        document.getElementsByClassName('sendButton')[0].style.display = "block";
+        document.getElementsByClassName('resetButton')[0].style.display = "block";
+        document.getElementsByClassName('textField')[0].style.display = "block";
+      }
     },
     krkButtonBlueClick(){
       this.krkButtonBlueHide();
@@ -226,7 +250,10 @@ export default {
       document.getElementsByClassName('ethStats_select')[0].style.display = "none";
       document.getElementsByClassName('krkStats_select')[0].style.display = "none";
       document.getElementsByClassName('rewardStats_select')[0].style.display = "none";
-
+      document.getElementsByClassName('txtform')[0].style.display = "block";
+      document.getElementsByClassName('sendButton')[0].style.display = "block";
+      document.getElementsByClassName('resetButton')[0].style.display = "block";
+      document.getElementsByClassName('textField')[0].style.display = "block";
     },
     //------------------
 
@@ -239,6 +266,10 @@ export default {
        document.getElementsByClassName('ethStats_select')[0].style.display = "none";
        document.getElementsByClassName('krkStats_select')[0].style.display = "none";
        document.getElementsByClassName('rewardStats_select')[0].style.display = "none";
+       document.getElementsByClassName('txtform')[0].style.display = "none";
+       document.getElementsByClassName('sendButton')[0].style.display = "none";
+       document.getElementsByClassName('resetButton')[0].style.display = "none";
+       document.getElementsByClassName('textField')[0].style.display = "none";
     },
     ethWalletButtonBlueHide(){
       if(!this.userAddress.startsWith('0x')) return;
@@ -251,7 +282,12 @@ export default {
         if(this.ethWalletButtonClicked){ document.getElementsByClassName('ethStats_select')[0].style.display = "block";}
         else if(this.krkWalletButtonClicked){ document.getElementsByClassName('krkStats_select')[0].style.display = "block";}
         else if(this.rewardButtonClicked){ document.getElementsByClassName('rewardStats_select')[0].style.display = "block";}
-
+        else if(this.ethButtonClicked || this.krkButtonClicked){
+          document.getElementsByClassName('txtform')[0].style.display = "block";
+          document.getElementsByClassName('sendButton')[0].style.display = "block";
+          document.getElementsByClassName('resetButton')[0].style.display = "block";
+          document.getElementsByClassName('textField')[0].style.display = "block";
+        }
     },
     ethWalletButtonBlueClick(){
       this.ethWalletButtonBlueHide();
@@ -264,6 +300,10 @@ export default {
       document.getElementsByClassName('ethStats_select')[0].style.display = "block";
       document.getElementsByClassName('krkStats_select')[0].style.display = "none";
       document.getElementsByClassName('rewardStats_select')[0].style.display = "none";
+      document.getElementsByClassName('txtform')[0].style.display = "none";
+      document.getElementsByClassName('sendButton')[0].style.display = "none";
+      document.getElementsByClassName('resetButton')[0].style.display = "none";
+      document.getElementsByClassName('textField')[0].style.display = "none";
     },
     //------------------
 
@@ -276,6 +316,10 @@ export default {
        document.getElementsByClassName('ethStats_select')[0].style.display = "none";
        document.getElementsByClassName('krkStats_select')[0].style.display = "none";
        document.getElementsByClassName('rewardStats_select')[0].style.display = "none";
+       document.getElementsByClassName('txtform')[0].style.display = "none";
+       document.getElementsByClassName('sendButton')[0].style.display = "none";
+       document.getElementsByClassName('resetButton')[0].style.display = "none";
+       document.getElementsByClassName('textField')[0].style.display = "none";
     },
     krkWalletButtonBlueHide(){
       if(!this.userAddress.startsWith('0x')) return;
@@ -288,7 +332,12 @@ export default {
       if(this.ethWalletButtonClicked){ document.getElementsByClassName('ethStats_select')[0].style.display = "block";}
       else if(this.krkWalletButtonClicked){ document.getElementsByClassName('krkStats_select')[0].style.display = "block";}
       else if(this.rewardButtonClicked){ document.getElementsByClassName('rewardStats_select')[0].style.display = "block";}
-
+      else if(this.ethButtonClicked || this.krkButtonClicked){
+        document.getElementsByClassName('txtform')[0].style.display = "block";
+        document.getElementsByClassName('sendButton')[0].style.display = "block";
+        document.getElementsByClassName('resetButton')[0].style.display = "block";
+        document.getElementsByClassName('textField')[0].style.display = "block";
+      }
     },
     krkWalletButtonBlueClick(){
       this.krkWalletButtonBlueHide();
@@ -301,6 +350,10 @@ export default {
       document.getElementsByClassName('ethStats_select')[0].style.display = "none";
       document.getElementsByClassName('krkStats_select')[0].style.display = "block";
       document.getElementsByClassName('rewardStats_select')[0].style.display = "none";
+      document.getElementsByClassName('txtform')[0].style.display = "none";
+      document.getElementsByClassName('sendButton')[0].style.display = "none";
+      document.getElementsByClassName('resetButton')[0].style.display = "none";
+      document.getElementsByClassName('textField')[0].style.display = "none";
     },
     //------------------
 
@@ -313,6 +366,10 @@ export default {
        document.getElementsByClassName('ethStats_select')[0].style.display = "none";
        document.getElementsByClassName('krkStats_select')[0].style.display = "none";
        document.getElementsByClassName('rewardStats_select')[0].style.display = "none";
+       document.getElementsByClassName('txtform')[0].style.display = "none";
+       document.getElementsByClassName('sendButton')[0].style.display = "none";
+       document.getElementsByClassName('resetButton')[0].style.display = "none";
+       document.getElementsByClassName('textField')[0].style.display = "none";
     },
     rewardButtonBlueHide(){
       if(!this.userAddress.startsWith('0x')) return;
@@ -325,7 +382,12 @@ export default {
       if(this.ethWalletButtonClicked){ document.getElementsByClassName('ethStats_select')[0].style.display = "block";}
       else if(this.krkWalletButtonClicked){ document.getElementsByClassName('krkStats_select')[0].style.display = "block";}
       else if(this.rewardButtonClicked){ document.getElementsByClassName('rewardStats_select')[0].style.display = "block";}
-
+      else if(this.ethButtonClicked || this.krkButtonClicked){
+        document.getElementsByClassName('txtform')[0].style.display = "block";
+        document.getElementsByClassName('sendButton')[0].style.display = "block";
+        document.getElementsByClassName('resetButton')[0].style.display = "block";
+        document.getElementsByClassName('textField')[0].style.display = "block";
+      }
     },
     rewardButtonBlueClick(){
       this.rewardButtonBlueHide();
@@ -338,6 +400,10 @@ export default {
       document.getElementsByClassName('ethStats_select')[0].style.display = "none";
       document.getElementsByClassName('krkStats_select')[0].style.display = "none";
       document.getElementsByClassName('rewardStats_select')[0].style.display = "block";
+      document.getElementsByClassName('txtform')[0].style.display = "none";
+      document.getElementsByClassName('sendButton')[0].style.display = "none";
+      document.getElementsByClassName('resetButton')[0].style.display = "none";
+      document.getElementsByClassName('textField')[0].style.display = "none";
 
     },
     //------------------
