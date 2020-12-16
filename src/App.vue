@@ -120,10 +120,10 @@ function numberWithCommas(x) {
 function truncateNumber(x) {
   return Math.trunc(x * 1000) / 1000;
 }
-//
-// function formatNumber(x) {
-//   return x.replace(/,/g, '');
-// }
+
+function formatNumber(x) {
+  return x.replace(/,/g, '');
+}
 
 // function formatAddress(address) {
 //   return address.substr(0, 5) + "..." + address.substr(35);
@@ -180,6 +180,19 @@ export default {
         document.getElementsByClassName(on[i])[0].style.display = "block";
       }
     },
+    blueHide(){
+      if(this.ethWalletButtonClicked){ document.getElementsByClassName('ethStats_select')[0].style.display = "block";}
+      else if(this.krkWalletButtonClicked){ document.getElementsByClassName('krkStats_select')[0].style.display = "block";}
+      else if(this.rewardButtonClicked){ document.getElementsByClassName('rewardStats_select')[0].style.display = "block";}
+      else if(this.ethButtonClicked || this.krkButtonClicked){
+        document.getElementsByClassName('txtform')[0].style.display = "block";
+        document.getElementsByClassName('sendButton')[0].style.display = "block";
+        document.getElementsByClassName('resetButton')[0].style.display = "block";
+        document.getElementsByClassName('textField')[0].style.display = "block";
+        if(this.ethButtonClicked){document.getElementsByClassName('eth_select')[0].style.display = "block";}
+        if(this.krkButtonClicked){document.getElementsByClassName('krk_select')[0].style.display = "block";}
+      }
+    },
     switchBlueShow(on){
       var off = ["ethButtonBlue","krkPurchase","initMessage","ethStats_select","krkStats_select","rewardStats_select",
       "txtform","sendButton","resetButton","textField","eth_select","krk_select"];
@@ -200,17 +213,7 @@ export default {
         if(!this.ethButtonClicked && !this.krkButtonClicked && !this.ethWalletButtonClicked && !this.krkWalletButtonClicked && !this.rewardButtonClicked) {
           document.getElementsByClassName('initMessage')[0].style.display = "block";
         }
-        if(this.ethWalletButtonClicked){ document.getElementsByClassName('ethStats_select')[0].style.display = "block";}
-        else if(this.krkWalletButtonClicked){ document.getElementsByClassName('krkStats_select')[0].style.display = "block";}
-        else if(this.rewardButtonClicked){ document.getElementsByClassName('rewardStats_select')[0].style.display = "block";}
-        else if(this.ethButtonClicked || this.krkButtonClicked){
-          document.getElementsByClassName('txtform')[0].style.display = "block";
-          document.getElementsByClassName('sendButton')[0].style.display = "block";
-          document.getElementsByClassName('resetButton')[0].style.display = "block";
-          document.getElementsByClassName('textField')[0].style.display = "block";
-          if(this.ethButtonClicked){document.getElementsByClassName('eth_select')[0].style.display = "block";}
-          if(this.krkButtonClicked){document.getElementsByClassName('krk_select')[0].style.display = "block";}
-        }
+      this.blueHide();
       },
     ethButtonBlueClick(){
       this.ethButtonBlueHide();
@@ -242,17 +245,7 @@ export default {
       if(!this.ethButtonClicked && !this.krkButtonClicked && !this.ethWalletButtonClicked && !this.krkWalletButtonClicked && !this.rewardButtonClicked) {
         document.getElementsByClassName('initMessage')[0].style.display = "block";
       }
-      if(this.ethWalletButtonClicked){ document.getElementsByClassName('ethStats_select')[0].style.display = "block";}
-      else if(this.krkWalletButtonClicked){ document.getElementsByClassName('krkStats_select')[0].style.display = "block";}
-      else if(this.rewardButtonClicked){ document.getElementsByClassName('rewardStats_select')[0].style.display = "block";}
-      else if(this.ethButtonClicked || this.krkButtonClicked){
-        document.getElementsByClassName('txtform')[0].style.display = "block";
-        document.getElementsByClassName('sendButton')[0].style.display = "block";
-        document.getElementsByClassName('resetButton')[0].style.display = "block";
-        document.getElementsByClassName('textField')[0].style.display = "block";
-        if(this.ethButtonClicked){document.getElementsByClassName('eth_select')[0].style.display = "block";}
-        if(this.krkButtonClicked){document.getElementsByClassName('krk_select')[0].style.display = "block";}
-      }
+      this.blueHide();
     },
     krkButtonBlueClick(){
       this.krkButtonBlueHide();
@@ -284,17 +277,7 @@ export default {
       if(!this.ethButtonClicked && !this.krkButtonClicked && !this.ethWalletButtonClicked && !this.krkWalletButtonClicked && !this.rewardButtonClicked) {
         document.getElementsByClassName('initMessage')[0].style.display = "block";
       }
-        if(this.ethWalletButtonClicked){ document.getElementsByClassName('ethStats_select')[0].style.display = "block";}
-        else if(this.krkWalletButtonClicked){ document.getElementsByClassName('krkStats_select')[0].style.display = "block";}
-        else if(this.rewardButtonClicked){ document.getElementsByClassName('rewardStats_select')[0].style.display = "block";}
-        else if(this.ethButtonClicked || this.krkButtonClicked){
-          document.getElementsByClassName('txtform')[0].style.display = "block";
-          document.getElementsByClassName('sendButton')[0].style.display = "block";
-          document.getElementsByClassName('resetButton')[0].style.display = "block";
-          document.getElementsByClassName('textField')[0].style.display = "block";
-          if(this.ethButtonClicked){document.getElementsByClassName('eth_select')[0].style.display = "block";}
-          if(this.krkButtonClicked){document.getElementsByClassName('krk_select')[0].style.display = "block";}
-        }
+      this.blueHide();
     },
     ethWalletButtonBlueClick(){
       this.ethWalletButtonBlueHide();
@@ -326,17 +309,7 @@ export default {
       if(!this.ethButtonClicked && !this.krkButtonClicked && !this.ethWalletButtonClicked && !this.krkWalletButtonClicked && !this.rewardButtonClicked) {
         document.getElementsByClassName('initMessage')[0].style.display = "block";
       }
-      if(this.ethWalletButtonClicked){ document.getElementsByClassName('ethStats_select')[0].style.display = "block";}
-      else if(this.krkWalletButtonClicked){ document.getElementsByClassName('krkStats_select')[0].style.display = "block";}
-      else if(this.rewardButtonClicked){ document.getElementsByClassName('rewardStats_select')[0].style.display = "block";}
-      else if(this.ethButtonClicked || this.krkButtonClicked){
-        document.getElementsByClassName('txtform')[0].style.display = "block";
-        document.getElementsByClassName('sendButton')[0].style.display = "block";
-        document.getElementsByClassName('resetButton')[0].style.display = "block";
-        document.getElementsByClassName('textField')[0].style.display = "block";
-        if(this.ethButtonClicked){document.getElementsByClassName('eth_select')[0].style.display = "block";}
-        if(this.krkButtonClicked){document.getElementsByClassName('krk_select')[0].style.display = "block";}
-      }
+      this.blueHide();
     },
     krkWalletButtonBlueClick(){
       this.krkWalletButtonBlueHide();
@@ -368,17 +341,7 @@ export default {
       if(!this.ethButtonClicked && !this.krkButtonClicked && !this.ethWalletButtonClicked && !this.krkWalletButtonClicked && !this.rewardButtonClicked) {
         document.getElementsByClassName('initMessage')[0].style.display = "block";
       }
-      if(this.ethWalletButtonClicked){ document.getElementsByClassName('ethStats_select')[0].style.display = "block";}
-      else if(this.krkWalletButtonClicked){ document.getElementsByClassName('krkStats_select')[0].style.display = "block";}
-      else if(this.rewardButtonClicked){ document.getElementsByClassName('rewardStats_select')[0].style.display = "block";}
-      else if(this.ethButtonClicked || this.krkButtonClicked){
-        document.getElementsByClassName('txtform')[0].style.display = "block";
-        document.getElementsByClassName('sendButton')[0].style.display = "block";
-        document.getElementsByClassName('resetButton')[0].style.display = "block";
-        document.getElementsByClassName('textField')[0].style.display = "block";
-        if(this.ethButtonClicked){document.getElementsByClassName('eth_select')[0].style.display = "block";}
-        if(this.krkButtonClicked){document.getElementsByClassName('krk_select')[0].style.display = "block";}
-      }
+      this.blueHide();
     },
     rewardButtonBlueClick(){
       this.rewardButtonBlueHide();
@@ -424,6 +387,25 @@ export default {
     reloadSale(){window.location.reload(true);},
     clearTextField(){
       document.getElementById('tbox').value = "";
+    },
+    send(){
+      var tboxval = document.getElementById('tbox').value;
+      const fromAddress = web3.eth.accounts.givenProvider.selectedAddress;
+      const amountWei = web3.utils.toWei(formatNumber(tboxval), 'ether');
+      if(this.ethButtonClicked){
+        //alert("ethButtonClicked");
+        console.log(123);
+        auctionBox.methods
+            .purchaseEthereum(amountWei)
+            .send({ from: fromAddress });
+
+      }
+      else if(this.krkButtonClicked){
+        //alert("krkButtonClicked");
+        auctionBox.methods
+            .purchaseTokens()
+            .send({ from: fromAddress, value:amountWei });
+      }
     },
 // ----------------CONTRACT FUNCTIONS START---------------
     getCurrentRate(){
@@ -480,7 +462,6 @@ export default {
       this.getEthReturnBonus(this.circulatingUserKrk);
       this.getEthReturnNoBonus(this.circulatingUserKrk);
       this.getKrakintTotalEthEarnings(this.userAddress);
-      this.ethTotalReturn = Number(this.ethReturnBonus)+Number(this.ethReturnNoBonus);
     },
 
     getEthReturnNoBonus(krkAmount){
