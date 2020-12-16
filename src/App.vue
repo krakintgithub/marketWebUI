@@ -415,28 +415,20 @@ export default {
     },
     getReturnRate(){
       const address = web3.eth.accounts.givenProvider.selectedAddress;
-      let nobonus = 0;
-      let bonus = 0;
-
+      var rrate = 0;
       auctionBox.methods
           .getEthReturnBonus(web3.utils.toWei('1000', 'ether'), address)
           .call()
           .then((n) => {
-            nobonus = n;
+            rrate = parseFloat(web3.utils.fromWei(n, 'ether'));
+            auctionBox.methods
+                .getEthReturnNoBonus(web3.utils.toWei('1000', 'ether'), address)
+                .call()
+                .then((n) => {
+                  rrate = rrate+parseFloat(web3.utils.fromWei(n, 'ether'));
+                  this.returnRate = numberWithCommas(truncateNumber(rrate));
+                });
           });
-
-      auctionBox.methods
-          .getEthReturnNoBonus(web3.utils.toWei('1000', 'ether'), address)
-          .call()
-          .then((n) => {
-            bonus = n;
-          });
-
-      let rate_n = web3.utils.fromWei(''+nobonus, 'ether');
-      let rate_b = web3.utils.fromWei(''+bonus, 'ether');
-      let rr = Number(rate_n)+Number(rate_b);
-      this.returnRate = numberWithCommas(truncateNumber(rr));
-
     },
     getEthStats(){
 
