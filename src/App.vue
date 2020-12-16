@@ -457,11 +457,20 @@ export default {
       this.getTotalMintedKRK();
     },
     getRewardStats(){
-      this.getCirculatingUserKrk();
-      this.getKrkReturn(this.circulatingUserKrk);
-      this.getEthReturnBonus(this.circulatingUserKrk);
-      this.getEthReturnNoBonus(this.circulatingUserKrk);
-      this.getKrakintTotalEthEarnings(this.userAddress);
+
+      var circKRK = 0;
+      const address = web3.eth.accounts.givenProvider.selectedAddress;
+      auctionBox.methods
+          .getCirculatingUserKrk(address)
+          .call()
+          .then((n) => {
+            circKRK = n;
+          }).then(()=>{
+        this.getKrkReturn(circKRK);
+        this.getEthReturnBonus(circKRK);
+        this.getEthReturnNoBonus(circKRK);
+        this.getKrakintTotalEthEarnings(circKRK);
+      });
     },
 
     getEthReturnNoBonus(krkAmount){
