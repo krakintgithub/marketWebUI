@@ -15,7 +15,8 @@
 
       <div class="initMessage" v-if="this.userAddress.startsWith('0x')" v-on:click="reloadSale()">
         <div class="bold">Connected to:</div> {{this.userAddress.substr(0, 5) + "..." + this.userAddress.substr(35)}}<br><br>
-        Click on a button<div><img src="./assets/img/hexagon_blank.png" width="50px"></div> from the menu below.
+        Click on a button<div><img src="./assets/img/hexagon_blank.png" width="50px"></div> from the menu below,
+        <br>then wait for values to load...
       </div>
 
       <div class="balance" v-if="!this.userAddress.startsWith('0x')">
@@ -637,7 +638,7 @@ body {background:none transparent !important;
 
 .initMessage{
   position: absolute;
-  margin-bottom: 195px;
+  margin-bottom: 180px;
   text-align: center;
 }
 
