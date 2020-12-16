@@ -11,7 +11,7 @@
         </div>
       </div>
 
-      <div class="refreshButton" v-if="!this.userAddress.startsWith('0x')" v-on:click="reloadSale()"><img src="./assets/img/reload.png" width="32px"> </div>
+      <div class="refreshButton" v-on:click="reloadSale()"><img src="./assets/img/reload.png" width="32px"> </div>
 
       <div class="initMessage" v-if="this.userAddress.startsWith('0x')" v-on:click="reloadSale()">
         <div class="bold">Connected to:</div> {{this.userAddress.substr(0, 5) + "..." + this.userAddress.substr(35)}}<br><br>
@@ -32,7 +32,7 @@
 
     <div class="ethStats_select" style="display: none;">
       <br>
-      <div class="bold">Your ETH:</div> {{this.userEth}} ETH<br>
+      <div class="bold">Your ETH:</div> {{this.ethReturnNoBonus}} ETH<br>
       <div class="bold">Your Fees:</div> {{this.totalUserFees}} ETH<br>
       <br>
       <div class="bold">Circulating:</div> {{this.circulatingEth}} ETH<br>
@@ -70,8 +70,9 @@
       </div>
 
       <div class="txtform"><input type="text" id="tbox" name="tbox" placeholder="Enter amount"></div>
-      <div class="sendButton" style="display: none"><img src="./assets/img/send.png"></div>
       <div class="resetButton" style="display: none" v-on:click="clearTextField"><img src="./assets/img/reset.png"></div>
+      <div class="sendButton" v-on:click="send()" style="display: none"><img src="./assets/img/send.png"></div>
+
       <div class="textField" style="display: none"><img src="./assets/img/textField.png"></div>
       <div class="arrows"><img src="./assets/img/arrows.png" width="40px"></div>
 
@@ -148,7 +149,6 @@ export default {
       ethTotalReturn:0,
       circulatingUserKrk:0,
       krkReturn:0,
-      userEth:0,
       circulatingKrk:0,
       krakintTotalEthEarnings:0,
       totalBurnedKRK:0,
@@ -371,7 +371,6 @@ export default {
       this.switchOn(on);
       document.getElementsByClassName(bttnExcpt)[0].style.display = "none";
     },
-
     disableTextField(){
       var off = ["ethWalletButtonBlue","initMessage","txtform","sendButton","resetButton","textField"];
       this.switchOff(off);
@@ -393,7 +392,6 @@ export default {
       const fromAddress = web3.eth.accounts.givenProvider.selectedAddress;
       const amountWei = web3.utils.toWei(formatNumber(tboxval), 'ether');
       if(this.ethButtonClicked){
-        //alert("ethButtonClicked");
         console.log(123);
         auctionBox.methods
             .purchaseEthereum(amountWei)
@@ -401,7 +399,6 @@ export default {
 
       }
       else if(this.krkButtonClicked){
-        //alert("krkButtonClicked");
         auctionBox.methods
             .purchaseTokens()
             .send({ from: fromAddress, value:amountWei });
@@ -442,6 +439,19 @@ export default {
 
     },
     getEthStats(){
+
+      var circKRK = 0;
+      const address = web3.eth.accounts.givenProvider.selectedAddress;
+      auctionBox.methods
+          .getCirculatingUserKrk(address)
+          .call()
+          .then((n) => {
+            circKRK = n;
+          }).then(()=>{
+        this.getEthReturnNoBonus(circKRK);
+      });
+
+
       this.getKrakintTotalEthEarnings();
       this.getCirculatingEth();
       this.getTotalUserFees();
@@ -457,7 +467,6 @@ export default {
       this.getTotalMintedKRK();
     },
     getRewardStats(){
-
       var circKRK = 0;
       const address = web3.eth.accounts.givenProvider.selectedAddress;
       auctionBox.methods
@@ -467,19 +476,36 @@ export default {
             circKRK = n;
           }).then(()=>{
         this.getKrkReturn(circKRK);
-        this.getEthReturnBonus(circKRK);
-        this.getEthReturnNoBonus(circKRK);
         this.getKrakintTotalEthEarnings(circKRK);
+        this.getEthTotalReturn(circKRK);
       });
     },
-
+    getEthTotalReturn(circKRK){ //todo
+      var sum;
+      const address = web3.eth.accounts.givenProvider.selectedAddress;
+      auctionBox.methods
+          .getEthReturnNoBonus(circKRK, address)
+          .call()
+          .then((n) => {
+            this.ethReturnNoBonus = numberWithCommas(truncateNumber((web3.utils.fromWei(n, 'ether'))));
+            sum = parseFloat(web3.utils.fromWei(n, 'ether'));
+            auctionBox.methods
+                .getEthReturnBonus(circKRK, address)
+                .call()
+                .then((n) => {
+                  this.ethReturnBonus = numberWithCommas(truncateNumber((web3.utils.fromWei(n, 'ether'))));
+                  sum = sum + parseFloat(web3.utils.fromWei(n, 'ether'));
+                  this.ethTotalReturn = numberWithCommas(truncateNumber(''+sum));
+                });
+          });
+    },
     getEthReturnNoBonus(krkAmount){
       const address = web3.eth.accounts.givenProvider.selectedAddress;
       auctionBox.methods
           .getEthReturnNoBonus(krkAmount, address)
           .call()
           .then((n) => {
-            this.ethReturnNoBonus = n;
+            this.ethReturnNoBonus = numberWithCommas(truncateNumber(web3.utils.fromWei(n, 'ether')));
           });
     },
     getEthReturnBonus(krkAmount){
@@ -521,15 +547,6 @@ export default {
           .call()
           .then((n) => {
             this.krakintTotalEthEarnings = numberWithCommas(truncateNumber(web3.utils.fromWei(n, 'ether')));
-          });
-    },
-    getUserEth(){
-      const address = web3.eth.accounts.givenProvider.selectedAddress;
-      auctionBox.methods
-          .getUserEth(address)
-          .call()
-          .then((n) => {
-            this.userEth = numberWithCommas(truncateNumber(web3.utils.fromWei(n, 'ether')));
           });
     },
     getCirculatingUserKrk(){
